@@ -39,7 +39,7 @@ package
 			//Create a new tilemap using our map data
 			map = new Map(new LevelData(GameAssets.TestMap, LevelData.TYPE_CSV), new LevelData(GameAssets.TestMapItems, LevelData.TYPE_CSV));
 			map.loadLevel();
-			map.spawn = new FlxObject(map.getBounds().width / 2, map.getBounds().height / 2);
+			map.spawn = new FlxObject(128, map.getBounds().height / 2);
 			backgroundSprite.makeGraphic(map.getBounds().width, map.getBounds().height, 0xff33CCFF);
 			add(backgroundSprite);
 			add(map);
@@ -127,6 +127,7 @@ package
 			}
 			
 			FlxG.shake(0.001, 0.25);
+			FlxG.flash(0x55ffffff, 0.2);
 		}
 		
 		override public function update():void

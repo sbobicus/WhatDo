@@ -8,7 +8,7 @@ package
 		public var flames:Flames;
 		
 		public static var buttons:Array;
-		
+		public static var flameEmitter:FlxEmitter;
 		public static const KEY_UP:int = 0;
 		public static const KEY_LEFT:int = 1;
 		public static const KEY_DOWN:int = 2;
@@ -34,6 +34,20 @@ package
 			
 			flames = new Flames(0, 0, null);
 			flames.exists = false;
+			
+			var emitter:FlxEmitter = new FlxEmitter(100,100); //x and y of the emitter
+			var particles:int = 5;
+			 
+			for(var i:int = 0; i < particles; i++)
+			{
+				var particle:FlxParticle = new FlxParticle();
+				particle.makeGraphic(2, 2, 0xffffffff);
+				particle.exists = false;
+				emitter.add(particle);
+			}
+			 
+			add(emitter);
+			emitter.start();
 		}
 		
 		
