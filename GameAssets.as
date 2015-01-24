@@ -11,11 +11,15 @@ package
 		[Embed(source="./assets/suit.png")]
 		public static var Player1Image:Class;
 		
-				
 		[Embed(source="./assets/punk.png")]
 		public static var Player2Image:Class;
 		
+		[Embed(source="./assets/pickup.png")]
+		public static var Coins:Class;
+		
 		[Embed(source="./assets/testmap.txt", mimeType="application/octet-stream")]
 		public static var TestMap:Class;
+		
+		
 	}
 } 

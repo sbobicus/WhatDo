@@ -12,8 +12,6 @@ package
 		public var player1:Player;
 		public var player2:Player;
 		
-		public var enemies:FlxGroup;
-		
 		public var score:FlxText;
 		public var status:FlxText;
 		
@@ -35,8 +33,8 @@ package
 			FlxG.bgColor = 0xFF66CCFF;
 			
 			//Create a new tilemap using our map data
-			map = new Map();
-			map.loadLevel(0);
+			map = new Map(new LevelData(GameAssets.TestMap, LevelData.TYPE_CSV), new LevelData(GameAssets.TestMap, LevelData.TYPE_CSV));
+			map.loadLevel();
 			add(map);
 			
 			//Create the map exit, a dark gray box that is hidden at first
@@ -120,10 +118,10 @@ package
 			}
 			add(status);
 			
-			enemies = new FlxGroup();
-			enemies.add(new Crawler(map.getBounds().width / 2, 0));
+			map.enemies = new FlxGroup();
+			map.enemies.add(new Crawler(map.getBounds().width / 2, 0));
 			
-			add(enemies);
+			add(map.enemies);
 		}
 		
 		public function createPlayer(index:int, graphic:Class) : Player
@@ -252,9 +250,9 @@ package
 			//Finally, bump the currentPlayer up against the map
 			FlxG.collide(map, currentPlayer);
 			
-			FlxG.collide(map, enemies);
+			FlxG.collide(map, map.enemies);
 			
-			if (FlxG.overlap(enemies, currentPlayer))
+			if (FlxG.overlap(map.enemies, currentPlayer))
 			{
 				FlxG.score = 1; //sets status.text to "Aww, you died!"
 				FlxG.resetState();
@@ -263,7 +261,7 @@ package
 			
 			if (currentPlayer.flames.exists)
 			{
-				FlxG.overlap(currentPlayer.flames, enemies, FlamesHitEnemy);
+				FlxG.overlap(currentPlayer.flames, map.enemies, FlamesHitEnemy);
 			}
 			
 			//Check for currentPlayer lose conditions

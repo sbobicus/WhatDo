@@ -1,6 +1,7 @@
 package
 {
 	import flash.display.BitmapData;
+	import flash.filters.DisplacementMapFilterMode;
 	
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxSprite;
@@ -11,19 +12,25 @@ package
 	{
 		public var coins:FlxGroup;
 		public var exit:FlxSprite;
-		private var levels:Array;
-		private var levelObjects:Array;
+		private var tileData:LevelData;
+		private var objectData:LevelData;
 		public var tileWidth:int;
 		public var tileHeight:int;
+		public var enemies:FlxGroup;
+		public var objectFunctions:Array;
 		
-		public function Map() : void
+		public function Map(tiles:LevelData, objects:LevelData) : void
 		{
 			super();
-			levels = new Array();
-			//levelObjects = new Array();
-			levels.push(new LevelData(GameAssets.LevelImage, LevelData.TYPE_BITMAP));
-			//levels.push(new LevelData(GameAssets.TestMap, LevelData.TYPE_CSV));
-			//levelObjects.push(GameAssets.LevelImage);
+			tileData = tiles;
+			objectData = objects;
+			
+			objectFunctions = new Array(nothing, createCoin);
+		}
+		
+		public function nothing(x:uint, y:uint) : void
+		{
+			// an intentional nothing for no enemies.
 		}
 		
 		public function setData(data:Array, width:int):void
@@ -36,7 +43,10 @@ package
 		public function createCoin(X:uint,Y:uint):void
 		{
 			var coin:FlxSprite = new FlxSprite(X * _tileWidth + 3, Y * _tileHeight + 2);
-			coin.makeGraphic(2,4,0xffffff00);
+			coin.loadGraphic(GameAssets.Coins, true);
+			coin.addAnimation("red", [0, 1], 1);
+			coin.addAnimation("blue", [1]);
+			coin.play("red");
 			coins.add(coin);
 		}
 		
@@ -47,45 +57,64 @@ package
 			exit.exists = false;
 		}
 		
-		public function loadLevel(num:uint):void
+		public function loadLevel():void
 		{
-			loadTiles(num);
-			loadObjects(num);
+			loadTiles();
+			loadObjects();
 			tileWidth = _tileWidth;
 			tileHeight = _tileHeight;
 		}
 		
-		public function loadTiles(num:uint):void
+		public function loadTiles():void
 		{
-			var levelData:LevelData = levels[num];
-			
-			if (levelData.type == LevelData.TYPE_BITMAP)
+			if (tileData.type == LevelData.TYPE_BITMAP)
 			{
-				loadBitmap(num);
+				loadBitmap(this);
 			}
 			else
 			{
-				loadCSV(num);
+				loadCSV(this);
+			}
+		}
+		
+		public function loadBitmap(map:FlxTilemap):void
+		{
+			map.loadMap(imageToCSV(tileData.asset), GameAssets.TileMap, 16, 16, FlxTilemap.OFF, -1);
+		}
+		
+		public function loadCSV(map:FlxTilemap):void
+		{
+			var myByteArray:ByteArray = new tileData.asset;
+			var myString:String = myByteArray.readUTFBytes(myByteArray.length);
+			map.loadMap(myString, GameAssets.TileMap, 16, 16, FlxTilemap.OFF, 1);
+	
+		}
+		
+		public function loadObjects():void
+		{
+			coins = new FlxGroup();
+			enemies = new FlxGroup();
+			var objectMap:FlxTilemap = new FlxTilemap();
+		    
+			if (objectData.type == LevelData.TYPE_BITMAP)
+			{
+				loadBitmap(objectMap);
+			}
+			else 
+			{
+				loadCSV(objectMap);
 			}
 			
-		}
-		
-		public function loadBitmap(num:uint):void
-		{
-			loadMap(imageToCSV(levels[num].asset), GameAssets.TileMap, 16, 16, FlxTilemap.OFF, -1);
-		}
-		
-		public function loadCSV(num:int):void
-		{
-			var myByteArray:ByteArray = new levels[num].asset;
-			var myString:String = myByteArray.readUTFBytes(myByteArray.length);
-			loadMap(myString, GameAssets.TileMap, 16, 16, FlxTilemap.OFF, 1);
-		}
-		
-		public function loadObjects(num:uint):void
-		{
-			//var bitmap:BitmapData = (new levelObjects[0]).bitmapData;
-			coins = new FlxGroup();
+			
+			for (var x:int = 0; x < this.widthInTiles; x++)
+			{
+				for (var y:int = 0; y < this.heightInTiles; y++)
+				{
+					var tile:uint = getTile(x, y);
+					//objectFunctions[tile](x, y);
+				}
+			}
+			
 		}
 	}
 
