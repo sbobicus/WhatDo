@@ -2,7 +2,7 @@ package
 {
 	public class GameAssets
 	{
-		[Embed(source="./assets/test.png")]
+		[Embed(source="./maps/test.png")]
 		public static var LevelImage:Class;
 		
 		[Embed(source="./assets/tiles.png")]
@@ -11,7 +11,7 @@ package
 		[Embed(source="./assets/suit.png")]
 		public static var Player1Image:Class;
 		
-		[Embed(source="./assets/skyline.png")]
+		[Embed(source="./maps/skyline.png")]
 		public static var Level1:Class;
 				
 		[Embed(source="./assets/punk.png")]
@@ -29,10 +29,10 @@ package
 		[Embed(source="./assets/robo1.png")]
 		public static var Robot1:Class;
 		
-		[Embed(source="./assets/testmap.txt", mimeType="application/octet-stream")]
+		[Embed(source="./maps/testmap.txt", mimeType="application/octet-stream")]
 		public static var TestMap:Class;
 		
-		[Embed(source="./assets/testmap_items.txt", mimeType="application/octet-stream")]
+		[Embed(source="./maps/testmap_items.txt", mimeType="application/octet-stream")]
 		public static var TestMapItems:Class;
 		
 		

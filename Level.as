@@ -1,9 +1,17 @@
 package 
 {	
-	import org.flixel.*;
 	import Map;
+	
 	import Player;
+	
+	import org.flixel.FlxCamera;
+	import org.flixel.FlxG;
+	import org.flixel.FlxGroup;
+	import org.flixel.FlxObject;
+	import org.flixel.FlxRect;
+	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
+	import org.flixel.FlxText;
 	
 	public class Level extends FlxState 
 	{
@@ -132,8 +140,12 @@ package
 		
 		override public function update():void
 		{
-			FlxG.camera.follow(currentPlayer, FlxCamera.STYLE_PLATFORMER);
-			FlxG.worldBounds = map.getBounds();
+			FlxG.camera.follow(currentPlayer, FlxCamera.STYLE_LOCKON);
+			var x:uint = map.getBounds().left;
+			var y:uint = map.getBounds().top;
+			var a:uint = map.getBounds().right;
+			var b:uint = map.getBounds().bottom;
+			FlxG.camera.setBounds(x,y,a,b,true);
 			time += FlxG.elapsed;
 			score.text = "" + currentPlayer.flames.y;
 			if (time > switchTime)

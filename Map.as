@@ -1,6 +1,5 @@
 package
 {
-	import flash.display.BitmapData;
 	import flash.utils.ByteArray;
 	
 	import flash.filters.DisplacementMapFilterMode;
@@ -113,7 +112,6 @@ package
 				loadCSV(objectData, objectMap);
 			}
 			
-			
 			for (var x:int = 0; x < this.widthInTiles; x++)
 			{
 				for (var y:int = 0; y < this.heightInTiles; y++)
@@ -126,7 +124,6 @@ package
 					}
 				}
 			}
-			
 		}
 	}
 
