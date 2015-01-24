@@ -53,14 +53,22 @@ package
 				
 				if (tile > 0)
 				{
-					flames.y = (Math.round(dy / tiles.tileHeight) - 1) * tiles.tileHeight + tiles.tileHeight - 32;
+					flames.y = (Math.round(dy / tiles.tileHeight) - 1) * tiles.tileHeight + tiles.tileHeight - 32; 
+					var a:Number =  1.0 - Math.abs(flames.y - y) / 150.0;
+					flames.alpha = a;
+					if (a < 0.25)
+					{
+						flames.exists = false;
+						flames.y = 4096;
+					}
+					
 					flames.x = x;
 					return;
 				}
 				
 			}
 			
-			flames.y = FlxG.height + 32;
+			flames.y = 4096;
 			
 		}
 		

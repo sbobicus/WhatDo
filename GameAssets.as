@@ -26,6 +26,9 @@ package
 		[Embed(source="./assets/groundwhoosh.png")]
 		public static var GroundWhoosh:Class;
 		
+		[Embed(source="./assets/robo1.png")]
+		public static var Robot1:Class;
+		
 		[Embed(source="./assets/testmap.txt", mimeType="application/octet-stream")]
 		public static var TestMap:Class;
 		
