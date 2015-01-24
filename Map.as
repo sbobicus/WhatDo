@@ -1,6 +1,7 @@
 package
 {
 	import flash.display.BitmapData;
+	import flash.utils.ByteArray;
 	
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxSprite;
@@ -20,8 +21,9 @@ package
 			super();
 			levels = new Array();
 			//levelObjects = new Array();
-			levels.push(GameAssets.LevelImage);
-			levels.push(GameAssets.Level1);
+			//levels.push(GameAssets.Level1);
+			levels.push(new LevelData(GameAssets.LevelImage, LevelData.TYPE_BITMAP));
+			//levels.push(new LevelData(GameAssets.TestMap, LevelData.TYPE_CSV));
 			//levelObjects.push(GameAssets.LevelImage);
 		}
 		
@@ -56,7 +58,29 @@ package
 		
 		public function loadTiles(num:uint):void
 		{
-			loadMap(imageToCSV(levels[1]), GameAssets.TileMap, 16, 16, FlxTilemap.OFF, -1);
+			var levelData:LevelData = levels[num];
+			
+			if (levelData.type == LevelData.TYPE_BITMAP)
+			{
+				loadImage(levelData.asset);
+			}
+			else
+			{
+				loadCSV(levelData.asset);
+			}
+			
+		}
+		
+		public function loadImage(Image:Class):void
+		{
+			loadMap(imageToCSV(Image), GameAssets.TileMap, 16, 16, FlxTilemap.OFF, -1);
+		}
+		
+		public function loadCSV(asset:Class):void
+		{
+			var myByteArray = new asset;
+			var myString:String = myByteArray.readUTFBytes(myByteArray.length);
+			loadMap(myString, GameAssets.TileMap, 16, 16, FlxTilemap.OFF, 1);
 		}
 		
 		public function loadObjects(num:uint):void
