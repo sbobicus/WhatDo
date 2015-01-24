@@ -47,7 +47,7 @@ package
 			//Create a new tilemap using our map data
 			map = new Map(new LevelData(GameAssets.Skyscraper1, LevelData.TYPE_BITMAP), new LevelData(GameAssets.TestMapItems, LevelData.TYPE_CSV));
 			map.loadLevel();
-			map.spawn = new FlxObject(map.getBounds().width / 2, map.getBounds().height / 2);
+			map.spawn = new FlxObject(128, map.getBounds().height / 2);
 			backgroundSprite.makeGraphic(map.getBounds().width, map.getBounds().height, 0xff33CCFF);
 			add(backgroundSprite);
 			add(map);
@@ -55,14 +55,17 @@ package
 			add(map.spawn);
 			add(map.coins);
 			add(map.enemies);
-			
+
 			//Create currentPlayer (a red box)
 			Player.initButtons();
 			player1 = createPlayer(0, GameAssets.Player1Image);
 			player2 = createPlayer(1, GameAssets.Player2Image);
+			add(player2.jet);
 			add(player2);
 			add(player2.flames);
-			
+			Player.createParticles();
+			add(Player.flameEmitter);
+						
 			currentPlayer = player2;
 			switchPlayers();
 			
@@ -108,10 +111,12 @@ package
 				player2.facing = player1.facing;
 				player2.flames.x = player1.flames.x;
 				player2.flames.y = player1.flames.y;
+				remove(player1.jet);
 				remove(player1);
 				remove(currentPlayer.flames);
 				currentPlayer = player2;
 				
+				add(currentPlayer.jet);
 				add(currentPlayer);
 				add(currentPlayer.flames);
 			}
@@ -126,25 +131,28 @@ package
 				player1.facing = player2.facing;
 				player1.flames.x = player2.flames.x;
 				player1.flames.y = player2.flames.y;
+				remove(player2.jet);
 				remove(player2);
 				remove(currentPlayer.flames);
 				currentPlayer = player1;
 				
+				add(currentPlayer.jet);
 				add(currentPlayer);
 				add(currentPlayer.flames);
 			}
 			
-			FlxG.shake(0.001, 0.25);
+			//FlxG.shake(0.001, 0.25);
+			//FlxG.flash(0x55ffffff, 0.2);
 		}
 		
 		override public function update():void
 		{
-			FlxG.camera.follow(currentPlayer, FlxCamera.STYLE_LOCKON);
-			var x:uint = map.getBounds().left;
-			var y:uint = map.getBounds().top;
-			var a:uint = map.getBounds().right;
-			var b:uint = map.getBounds().bottom;
-			FlxG.camera.setBounds(x,y,a,b,true);
+			FlxG.camera.follow(currentPlayer, FlxCamera.STYLE_PLATFORMER);
+			//var x:uint = map.getBounds().left;
+			//var y:uint = map.getBounds().top;
+			//var a:uint = map.getBounds().right;
+			//var b:uint = map.getBounds().bottom;
+			//FlxG.camera.setBounds(x,y,a,b,true);
 			time += FlxG.elapsed;
 			score.text = "" + currentPlayer.flames.y;
 			if (time > switchTime)
@@ -173,7 +181,7 @@ package
 			}
 			else 
 			{
-				//currentPlayer.flameOff();
+				currentPlayer.flameOff();
 			}
 			
 			
@@ -212,6 +220,7 @@ package
 			
 			//Finally, bump the currentPlayer up against the map
 			FlxG.collide(map, currentPlayer);
+			FlxG.collide(map, Player.flameEmitter);
 			
 			FlxG.collide(map, map.enemies);
 			

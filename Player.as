@@ -1,14 +1,16 @@
 package  
 {
+
 	import org.flixel.*;
 
 	public class Player extends FlxSprite
 	{
 		public var index:int;
 		public var flames:Flames;
+		public static var flameEmitter:FlxEmitter;
+		public var jet:Flames;
 		
 		public static var buttons:Array;
-		
 		public static const KEY_UP:int = 0;
 		public static const KEY_LEFT:int = 1;
 		public static const KEY_DOWN:int = 2;
@@ -34,13 +36,55 @@ package
 			
 			flames = new Flames(0, 0, null);
 			flames.exists = false;
+			jet = new Flames(0, 0, null);
+			jet.loadGraphic(GameAssets.FlameImage, true, true, 40, 32);
+			
+			if (myIndex == 0)
+			{
+				jet.addAnimation("on", [0, 1, 2], 1.0 / 0.05, false);
+			}
+			else
+			{
+				jet.addAnimation("on", [3, 4, 5], 1.0 / 0.05, false);
+			}
+			 
 		}
 		
+		public static function createParticles() : void
+		{
+			var particles:int = 20;			
+			flameEmitter = new FlxEmitter(0, 0, particles); //x and y of the emitter
+
+			 
+			for(var i:int = 0; i < particles; i++)
+			{
+				var particle:FlxParticle = new FlxParticle();
+				particle.makeGraphic(2, 2, 0xffffffff);
+				particle.exists = false;
+				particle.friction = 100;
+				particle.lifespan = 0.5;
+				flameEmitter.add(particle);
+			}
+			
+			flameEmitter.lifespan = 0.25;
+			flameEmitter.particleDrag = new FlxPoint(100, 100);
+			flameEmitter.minParticleSpeed = new FlxPoint( -50, 50);
+			flameEmitter.maxParticleSpeed = new FlxPoint(50, 150);
+			flameEmitter.gravity = 500;
+			flameEmitter.bounce = 1;
+			
+			
+			flameEmitter.start(false, 0.5, 0.01, 10);
+		}
 		
 		
 		
 		public function flameOn(tiles:Map) : void
 		{
+			jet.exists = true;
+			jet.play("on", true);
+			jet.timer = 0;
+			flameEmitter.on = true;
 			flames.exists = true;
 			flames.play("whoosh", true);
 			flames.timer = 0;
@@ -74,13 +118,18 @@ package
 		
 		public function flameOff() : void
 		{
-			flames.exists = false;
+			flameEmitter.on = false;
 		}
 		
 		
 		public override function postUpdate() : void
 		{
 			super.postUpdate();
+			flameEmitter.x = x;
+			flameEmitter.y = y;
+			jet.x = x - 12;
+			jet.y = y + 16;
+			jet.facing = facing;
 		}
 		
 		public static function initButtons() : void
