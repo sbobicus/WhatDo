@@ -5,6 +5,7 @@ package
 	public class Player extends FlxSprite
 	{
 		public var index:int;
+		public var flames:Flames;
 		
 		public static var buttons:Array;
 		
@@ -30,6 +31,41 @@ package
 			height = 24;
 			offset.x = 8;
 			offset.y = 16;
+			
+			flames = new Flames(0, 0, null);
+			flames.makeGraphic(32, 15, 0xffff1111);
+			flames.exists = false;
+		}
+		
+		
+		
+		
+		public function flameOn(tiles:Map) : void
+		{
+			flames.exists = true;
+			flames.timer = 0;
+			var tileX:int = x / tiles.tileWidth;
+			for (var dy:Number = y; dy < FlxG.height; dy += tiles.tileHeight)
+			{
+				var tileY:int = dy / tiles.tileHeight;
+				var tile:uint = tiles.getTile(tileX, tileY);
+				
+				if (tile > 0)
+				{
+					flames.y = dy - 8;
+					flames.x = x;
+					return;
+				}
+				
+			}
+			
+			flames.y = FlxG.height + 32;
+			
+		}
+		
+		public function flameOff() : void
+		{
+			flames.exists = false;
 		}
 		
 		

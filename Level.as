@@ -131,6 +131,7 @@ package
 			player1 = createPlayer(0, GameAssets.Player1Image);
 			player2 = createPlayer(1, GameAssets.Player1Image);
 			add(player2);
+			add(player2.flames);
 			
 			currentPlayer = player2;
 			switchPlayers();
@@ -170,17 +171,21 @@ package
 				player2.x = player1.x;
 				player2.y = player1.y;
 				remove(player1);
+				remove(currentPlayer.flames);
 				currentPlayer = player2;
 				
 				add(currentPlayer);
+				add(currentPlayer.flames);
 			}
 			else
 			{
 				player1.x = player2.x;
 				player1.y = player2.y;
 				remove(player2);
+				remove(currentPlayer.flames);
 				currentPlayer = player1;
 				add(currentPlayer);
+				add(currentPlayer.flames);
 			}
 			
 			FlxG.shake(0.001, 0.25);
@@ -189,7 +194,7 @@ package
 		override public function update():void
 		{
 			time += FlxG.elapsed;
-			score.text = "" + time;
+			score.text = "" + currentPlayer.flames.y;
 			if (time > switchTime)
 			{
 				switchPlayers();
@@ -212,6 +217,11 @@ package
 			if (currentPlayer.keyJustPressed(Player.KEY_JUMP))
 			{
 				currentPlayer.velocity.y = -currentPlayer.maxVelocity.y / 2;
+				currentPlayer.flameOn(map);
+			}
+			else 
+			{
+				//currentPlayer.flameOff();
 			}
 			
 
