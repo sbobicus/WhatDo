@@ -21,8 +21,14 @@ package
 		[Embed(source="./assets/pickup.png")]
 		public static var Coins:Class;
 		
+		[Embed(source="./assets/item_tiles.png")]
+		public static var ItemTiles:Class;
+		
 		[Embed(source="./assets/testmap.txt", mimeType="application/octet-stream")]
 		public static var TestMap:Class;
+		
+		[Embed(source="./assets/testmap_items.txt", mimeType="application/octet-stream")]
+		public static var TestMapItems:Class;
 		
 		
 	}

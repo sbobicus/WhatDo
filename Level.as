@@ -33,65 +33,14 @@ package
 			FlxG.bgColor = 0xFF66CCFF;
 			
 			//Create a new tilemap using our map data
-			map = new Map(new LevelData(GameAssets.TestMap, LevelData.TYPE_CSV), new LevelData(GameAssets.TestMap, LevelData.TYPE_CSV));
+			map = new Map(new LevelData(GameAssets.TestMap, LevelData.TYPE_CSV), new LevelData(GameAssets.TestMapItems, LevelData.TYPE_CSV));
 			map.loadLevel();
+			map.spawn = new FlxObject(map.getBounds().width / 2, map.getBounds().height / 2);
 			add(map);
-			
-			//Create the map exit, a dark gray box that is hidden at first
-			map.createExit(35, 25);
 			add(map.exit);
-			
-			//Create coins to collect (see createCoin() function below for more info)
-			
-			//Top left coins
-			map.createCoin(18,4);
-			map.createCoin(12,4);
-			map.createCoin(9,4);
-			map.createCoin(8,11);
-			map.createCoin(1,7);
-			map.createCoin(3,4);
-			map.createCoin(5,2);
-			map.createCoin(15,11);
-			map.createCoin(16,11);
-			
-			//Bottom left coins
-			//map.createCoin(3,16);
-			//map.createCoin(4,16);
-			//map.createCoin(1,23);
-			//map.createCoin(2,23);
-			//map.createCoin(3,23);
-			//map.createCoin(4,23);
-			//map.createCoin(5,23);
-			//map.createCoin(12,26);
-			//map.createCoin(13,26);
-			//map.createCoin(17,20);
-			//map.createCoin(18,20);
-			
-			//Top right coins
-			//map.createCoin(21,4);
-			//map.createCoin(26,2);
-			//map.createCoin(29,2);
-			//map.createCoin(31,5);
-			//map.createCoin(34,5);
-			//map.createCoin(36,8);
-			//map.createCoin(33,11);
-			//map.createCoin(31,11);
-			//map.createCoin(29,11);
-			//map.createCoin(27,11);
-			//map.createCoin(25,11);
-			//map.createCoin(36,14);
-			
-			//Bottom right coins
-			//map.createCoin(38,17);
-			//map.createCoin(33,17);
-			//map.createCoin(28,19);
-			//map.createCoin(25,20);
-			//map.createCoin(18,26);
-			//map.createCoin(22,26);
-			//map.createCoin(26,26);
-			//map.createCoin(30,26);
-
+			add(map.spawn);
 			add(map.coins);
+			add(map.enemies);
 			
 			//Create currentPlayer (a red box)
 			Player.initButtons();
@@ -117,16 +66,12 @@ package
 				case 1: status.text = "Aww, you died!"; break;
 			}
 			add(status);
-			
-			map.enemies = new FlxGroup();
-			map.enemies.add(new Crawler(map.getBounds().width / 2, 0));
-			
 			add(map.enemies);
 		}
 		
 		public function createPlayer(index:int, graphic:Class) : Player
 		{
-			var player = new Player(index, FlxG.width/2 - 5, 0, graphic);
+			var player:Player = new Player(index, map.spawn.x, map.spawn.y, graphic);
 			player.maxVelocity.x = 150;
 			player.maxVelocity.y = 250;
 			player.acceleration.y = 300;
@@ -212,7 +157,6 @@ package
 				//currentPlayer.flameOff();
 			}
 			
-
 			
 			if (currentPlayer.isTouching(FlxObject.FLOOR))
 			{
