@@ -1,6 +1,11 @@
 package
 {
-	import org.flixel.*;
+	import flash.display.BitmapData;
+	import flash.utils.ByteArray;
+	
+	import org.flixel.FlxGroup;
+	import org.flixel.FlxSprite;
+	import org.flixel.FlxTilemap;
 
 	public class Level extends FlxTilemap
 	{
@@ -13,10 +18,17 @@ package
 			
 		}
 		
-		public function setData(data:Array, width:int)
+		public function setData(data:Array, width:int):void
 		{
 			coins = new FlxGroup();
 			loadMap(FlxTilemap.arrayToCSV(data,width), FlxTilemap.ImgAuto, 0, 0,FlxTilemap.AUTO);
+		}
+		
+		public function loadLevel(Graphic:Class):void
+		{
+			var levelPixels:BitmapData = (new GameAssets.LevelImage).bitmapData;
+			var bytes:ByteArray = levelPixels.getPixels(levelPixels.rect)
+			var level:ByteArray;	
 		}
 		
 		//creates a new coin located on the specified tile

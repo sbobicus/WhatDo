@@ -26,7 +26,7 @@ package
 			//Set the background color to light gray (0xAARRGGBB)
 			FlxG.bgColor = 0xffaaaaaa;
 			
-			var test:FlxSprite = new FlxSprite(0, 100, GameAssets.TitleSprite);
+			var test:FlxSprite = new FlxSprite(0, 100, GameAssets.LevelImage);
 			test.x = (FlxG.width * .5) - (test.width * .5);
 			add(test);
 			
