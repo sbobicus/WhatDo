@@ -47,7 +47,6 @@ package
 		
 		public function loadLevel(num:uint):void
 		{
-			coins = new FlxGroup();
 			loadTiles(num);
 			loadObjects(num);
 			tileWidth = _tileWidth;
