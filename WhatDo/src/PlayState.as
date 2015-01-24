@@ -4,9 +4,8 @@ package
 
 	public class PlayState extends FlxState
 	{
-		public var level:FlxTilemap;
+		public var level:Level;
 		public var exit:FlxSprite;
-		public var coins:FlxGroup;
 		public var currentPlayer:Player;
 		public var player1:Player;
 		public var player2:Player;
@@ -59,67 +58,65 @@ package
 				1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 );
 			
 			//Create a new tilemap using our level data
-			level = new FlxTilemap();
-			level.loadMap(FlxTilemap.arrayToCSV(data,40),FlxTilemap.ImgAuto,0,0,FlxTilemap.AUTO);
+			level = new Level();
+			level.setData(data, 40);
 			add(level);
 			
 			//Create the level exit, a dark gray box that is hidden at first
-			exit = new FlxSprite(35*8+1,25*8);
-			exit.makeGraphic(14,16,0xff3f3f3f);
-			exit.exists = false;
-			add(exit);
+			level.createExit(35, 25);
+			add(level.exit);
 			
 			//Create coins to collect (see createCoin() function below for more info)
-			coins = new FlxGroup();
+			
 			//Top left coins
-			createCoin(18,4);
-			createCoin(12,4);
-			createCoin(9,4);
-			createCoin(8,11);
-			createCoin(1,7);
-			createCoin(3,4);
-			createCoin(5,2);
-			createCoin(15,11);
-			createCoin(16,11);
+			level.createCoin(18,4);
+			level.createCoin(12,4);
+			level.createCoin(9,4);
+			level.createCoin(8,11);
+			level.createCoin(1,7);
+			level.createCoin(3,4);
+			level.createCoin(5,2);
+			level.createCoin(15,11);
+			level.createCoin(16,11);
 			
 			//Bottom left coins
-			createCoin(3,16);
-			createCoin(4,16);
-			createCoin(1,23);
-			createCoin(2,23);
-			createCoin(3,23);
-			createCoin(4,23);
-			createCoin(5,23);
-			createCoin(12,26);
-			createCoin(13,26);
-			createCoin(17,20);
-			createCoin(18,20);
+			level.createCoin(3,16);
+			level.createCoin(4,16);
+			level.createCoin(1,23);
+			level.createCoin(2,23);
+			level.createCoin(3,23);
+			level.createCoin(4,23);
+			level.createCoin(5,23);
+			level.createCoin(12,26);
+			level.createCoin(13,26);
+			level.createCoin(17,20);
+			level.createCoin(18,20);
 			
 			//Top right coins
-			createCoin(21,4);
-			createCoin(26,2);
-			createCoin(29,2);
-			createCoin(31,5);
-			createCoin(34,5);
-			createCoin(36,8);
-			createCoin(33,11);
-			createCoin(31,11);
-			createCoin(29,11);
-			createCoin(27,11);
-			createCoin(25,11);
-			createCoin(36,14);
+			level.createCoin(21,4);
+			level.createCoin(26,2);
+			level.createCoin(29,2);
+			level.createCoin(31,5);
+			level.createCoin(34,5);
+			level.createCoin(36,8);
+			level.createCoin(33,11);
+			level.createCoin(31,11);
+			level.createCoin(29,11);
+			level.createCoin(27,11);
+			level.createCoin(25,11);
+			level.createCoin(36,14);
 			
 			//Bottom right coins
-			createCoin(38,17);
-			createCoin(33,17);
-			createCoin(28,19);
-			createCoin(25,20);
-			createCoin(18,26);
-			createCoin(22,26);
-			createCoin(26,26);
-			createCoin(30,26);
+			level.createCoin(38,17);
+			level.createCoin(33,17);
+			level.createCoin(28,19);
+			level.createCoin(25,20);
+			level.createCoin(18,26);
+			level.createCoin(22,26);
+			level.createCoin(26,26);
+			level.createCoin(30,26);
 
-			add(coins);
+			add(level.coins);
 			
 			//Create currentPlayer (a red box)
 			Player.initButtons();
@@ -130,10 +127,9 @@ package
 			currentPlayer = player2;
 			switchPlayers();
 			
-			
 			score = new FlxText(2,2,80);
 			score.shadow = 0xff000000;
-			score.text = "SCORE: "+(coins.countDead()*100);
+			score.text = "SCORE: "+(level.coins.countDead()*100);
 			add(score);
 			
 			status = new FlxText(FlxG.width-160-2,2,160);
@@ -158,13 +154,6 @@ package
 			return player;
 		}
 		
-		//creates a new coin located on the specified tile
-		public function createCoin(X:uint,Y:uint):void
-		{
-			var coin:FlxSprite = new FlxSprite(X*8+3,Y*8+2);
-			coin.makeGraphic(2,4,0xffffff00);
-			coins.add(coin);
-		}
 		
 		public function switchPlayers():void 
 		{
@@ -187,6 +176,8 @@ package
 				currentPlayer = player1;
 				add(currentPlayer);
 			}
+			
+			FlxG.shake(0.001, 0.25);
 		}
 		
 		override public function update():void
@@ -203,23 +194,23 @@ package
 			currentPlayer.acceleration.x = 0;
 		
 			if(currentPlayer.isKeyPressed(Player.KEY_LEFT))
-				currentPlayer.acceleration.x = -currentPlayer.maxVelocity.x*4;
+				currentPlayer.acceleration.x = -currentPlayer.maxVelocity.x * 4;
 			if(currentPlayer.isKeyPressed(Player.KEY_RIGHT))
-				currentPlayer.acceleration.x = currentPlayer.maxVelocity.x*4;
+				currentPlayer.acceleration.x = currentPlayer.maxVelocity.x * 4;
 			if(currentPlayer.keyJustPressed(Player.KEY_JUMP))
-				currentPlayer.velocity.y = -currentPlayer.maxVelocity.y/2;
+				currentPlayer.velocity.y = -currentPlayer.maxVelocity.y / 2;
 			
 			//Updates all the objects appropriately
 			super.update();
 
 			//Check if currentPlayer collected a coin or coins this frame
-			FlxG.overlap(coins,currentPlayer,getCoin);
+			FlxG.overlap(level.coins, currentPlayer, getCoin);
 			
 			//Check to see if the currentPlayer touched the exit door this frame
-			FlxG.overlap(exit,currentPlayer,win);
+			FlxG.overlap(level.exit, currentPlayer, win);
 			
 			//Finally, bump the currentPlayer up against the level
-			FlxG.collide(level,currentPlayer);
+			FlxG.collide(level, currentPlayer);
 			
 			//Check for currentPlayer lose conditions
 			if(currentPlayer.y > FlxG.height)
@@ -233,8 +224,8 @@ package
 		public function getCoin(Coin:FlxSprite,Player:FlxSprite):void
 		{
 			Coin.kill();
-			score.text = "SCORE: "+(coins.countDead()*100);
-			if(coins.countLiving() == 0)
+			score.text = "SCORE: "+(level.coins.countDead()*100);
+			if(level.coins.countLiving() == 0)
 			{
 				status.text = "Find the exit.";
 				exit.exists = true;
