@@ -27,6 +27,10 @@ package
 			//Set the background color to light gray (0xAARRGGBB)
 			FlxG.bgColor = 0xffaaaaaa;
 			
+			var test:FlxSprite = new FlxSprite(0, 100, GameAssets.TitleSprite);
+			test.x = (FlxG.width * .5) - (test.width * .5);
+			add(test);
+			
 			//Design your platformer level with 1s and 0s (at 40x30 to fill 320x240 screen)
 			var data:Array = new Array(
 				1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
