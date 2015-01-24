@@ -115,6 +115,7 @@ package
 				remove(player2);
 				remove(currentPlayer.flames);
 				currentPlayer = player1;
+				
 				add(currentPlayer);
 				add(currentPlayer.flames);
 			}
