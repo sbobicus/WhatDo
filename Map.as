@@ -56,7 +56,7 @@ package
 		
 		public function loadTiles(num:uint):void
 		{
-			loadMap(imageToCSV(levels[1]), GameAssets.TileMap, 32, 32, FlxTilemap.OFF);
+			loadMap(imageToCSV(levels[1]), GameAssets.TileMap, 16, 16, FlxTilemap.OFF, -1);
 		}
 		
 		public function loadObjects(num:uint):void
