@@ -34,12 +34,6 @@ package
 			// an intentional nothing for no enemies.
 		}
 		
-		public function setData(data:Array, width:int):void
-		{
-			coins = new FlxGroup();
-			loadMap(FlxTilemap.arrayToCSV(data,width), FlxTilemap.ImgAuto, 0, 0,FlxTilemap.AUTO);
-		}
-		
 		//creates a new coin located on the specified tile
 		public function createCoin(X:uint,Y:uint):void
 		{
