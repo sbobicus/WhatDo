@@ -11,7 +11,11 @@ package
 		[Embed(source="./assets/suit.png")]
 		public static var Player1Image:Class;
 		
+		[Embed(source="./assets/skyline.png")]
+		public static var Level1:Class;
+				
 		[Embed(source="./assets/punk.png")]
+		
 		public static var Player2Image:Class;
 		
 		[Embed(source="./assets/pickup.png")]

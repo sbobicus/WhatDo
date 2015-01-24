@@ -1,12 +1,13 @@
 package
 {
 	import flash.display.BitmapData;
+	import flash.utils.ByteArray;
+	
 	import flash.filters.DisplacementMapFilterMode;
 	
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxTilemap;
-	import flash.utils.ByteArray;
 
 	public class Map extends FlxTilemap
 	{

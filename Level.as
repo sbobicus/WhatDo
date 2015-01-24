@@ -18,7 +18,7 @@ package
 		public var time:Number = 0.0;
 		public var switchTime:Number = 1.0;
 		
-		public var multiplayer:Boolean = true;
+		public var multiplayer:Boolean = false;
 		
 		
 		public function Level()
