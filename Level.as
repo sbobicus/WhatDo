@@ -60,6 +60,7 @@ package
 			Player.initButtons();
 			player1 = createPlayer(0, GameAssets.Player1Image);
 			player2 = createPlayer(1, GameAssets.Player2Image);
+			add(player2.jet);
 			add(player2);
 			add(player2.flames);
 			Player.createParticles();
@@ -110,10 +111,12 @@ package
 				player2.facing = player1.facing;
 				player2.flames.x = player1.flames.x;
 				player2.flames.y = player1.flames.y;
+				remove(player1.jet);
 				remove(player1);
 				remove(currentPlayer.flames);
 				currentPlayer = player2;
 				
+				add(currentPlayer.jet);
 				add(currentPlayer);
 				add(currentPlayer.flames);
 			}
@@ -128,10 +131,12 @@ package
 				player1.facing = player2.facing;
 				player1.flames.x = player2.flames.x;
 				player1.flames.y = player2.flames.y;
+				remove(player2.jet);
 				remove(player2);
 				remove(currentPlayer.flames);
 				currentPlayer = player1;
 				
+				add(currentPlayer.jet);
 				add(currentPlayer);
 				add(currentPlayer.flames);
 			}

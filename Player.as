@@ -1,5 +1,6 @@
 package  
 {
+
 	import org.flixel.*;
 
 	public class Player extends FlxSprite
@@ -7,6 +8,7 @@ package
 		public var index:int;
 		public var flames:Flames;
 		public static var flameEmitter:FlxEmitter;
+		public var jet:Flames;
 		
 		public static var buttons:Array;
 		public static const KEY_UP:int = 0;
@@ -34,6 +36,17 @@ package
 			
 			flames = new Flames(0, 0, null);
 			flames.exists = false;
+			jet = new Flames(0, 0, null);
+			jet.loadGraphic(GameAssets.FlameImage, true, true, 40, 32);
+			
+			if (myIndex == 0)
+			{
+				jet.addAnimation("on", [0, 1, 2], 1.0 / 0.05, false);
+			}
+			else
+			{
+				jet.addAnimation("on", [3, 4, 5], 1.0 / 0.05, false);
+			}
 			 
 		}
 		
@@ -68,6 +81,9 @@ package
 		
 		public function flameOn(tiles:Map) : void
 		{
+			jet.exists = true;
+			jet.play("on", true);
+			jet.timer = 0;
 			flameEmitter.on = true;
 			flames.exists = true;
 			flames.play("whoosh", true);
@@ -111,6 +127,9 @@ package
 			super.postUpdate();
 			flameEmitter.x = x;
 			flameEmitter.y = y;
+			jet.x = x - 12;
+			jet.y = y + 16;
+			jet.facing = facing;
 		}
 		
 		public static function initButtons() : void

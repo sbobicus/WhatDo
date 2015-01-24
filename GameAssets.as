@@ -2,6 +2,7 @@ package
 {
 	public class GameAssets
 	{
+
 		[Embed(source="./maps/test.png")]
 		public static var LevelImage:Class;
 		
@@ -25,6 +26,9 @@ package
 		
 		[Embed(source="./assets/groundwhoosh.png")]
 		public static var GroundWhoosh:Class;
+		
+		[Embed(source="./assets/flames.png")]
+		public static var FlameImage:Class;
 		
 		[Embed(source="./assets/robo1.png")]
 		public static var Robot1:Class;
