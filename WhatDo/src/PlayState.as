@@ -7,9 +7,15 @@ package
 		public var level:FlxTilemap;
 		public var exit:FlxSprite;
 		public var coins:FlxGroup;
-		public var player:FlxSprite;
+		public var currentPlayer:Player;
+		public var player1:Player;
+		public var player2:Player;
+		
 		public var score:FlxText;
 		public var status:FlxText;
+		
+		public var time:Number = 0.0;
+		public var switchTime:Number = 1.0;
 		
 		override public function create():void
 		{
@@ -113,14 +119,16 @@ package
 
 			add(coins);
 			
-			//Create player (a red box)
-			player = new FlxSprite(FlxG.width/2 - 5);
-			player.makeGraphic(10,12,0xffaa1111);
-			player.maxVelocity.x = 80;
-			player.maxVelocity.y = 200;
-			player.acceleration.y = 200;
-			player.drag.x = player.maxVelocity.x*4;
-			add(player);
+			//Create currentPlayer (a red box)
+			Player.initButtons();
+			player1 = createPlayer(0, 0xffaa1111);
+			player2 = createPlayer(1, 0xff1111aa);
+			add(player1);
+			add(player2);
+			
+			currentPlayer = player2;
+			switchPlayers();
+			
 			
 			score = new FlxText(2,2,80);
 			score.shadow = 0xff000000;
@@ -138,6 +146,17 @@ package
 			add(status);
 		}
 		
+		public function createPlayer(index:int, color:uint) : Player
+		{
+			var player = new Player(index, FlxG.width/2 - 5, 0, null);
+			player.makeGraphic(10,12,color);
+			player.maxVelocity.x = 80;
+			player.maxVelocity.y = 200;
+			player.acceleration.y = 200;
+			player.drag.x = player.maxVelocity.x * 4;
+			return player;
+		}
+		
 		//creates a new coin located on the specified tile
 		public function createCoin(X:uint,Y:uint):void
 		{
@@ -146,38 +165,68 @@ package
 			coins.add(coin);
 		}
 		
+		public function switchPlayers():void 
+		{
+				if (currentPlayer == player1)
+				{
+					player2.x = player1.x;
+					player2.y = player1.y;
+					remove(player1);
+					currentPlayer = player2;
+					
+					add(currentPlayer);
+				}
+				else
+				{
+					player1.x = player2.x;
+					player1.y = player2.y;
+					remove(player2);
+					currentPlayer = player1;
+					add(currentPlayer);
+				}
+		}
+		
 		override public function update():void
 		{
+			time += FlxG.elapsed;
+			score.text = "" + time;
+			if (time > switchTime)
+			{
+				switchPlayers();
+				time = 0;
+			}
+			
 			//Player movement and controls
-			player.acceleration.x = 0;
-			if(FlxG.LEFT)
-				player.acceleration.x = -player.maxVelocity.x*4;
-			if(FlxG.keys.RIGHT)
-				player.acceleration.x = player.maxVelocity.x*4;
-			if(FlxG.keys.justPressed("SPACE") && player.isTouching(FlxObject.FLOOR))
-				player.velocity.y = -player.maxVelocity.y/2;
+			currentPlayer.acceleration.x = 0;
+		
+			if(currentPlayer.isKeyPressed(Player.KEY_LEFT))
+				currentPlayer.acceleration.x = -currentPlayer.maxVelocity.x*4;
+			if(currentPlayer.isKeyPressed(Player.KEY_RIGHT))
+				currentPlayer.acceleration.x = currentPlayer.maxVelocity.x*4;
+			if(currentPlayer.keyJustPressed(Player.KEY_JUMP))
+				currentPlayer.velocity.y = -currentPlayer.maxVelocity.y/2;
 			
 			//Updates all the objects appropriately
 			super.update();
 
-			//Check if player collected a coin or coins this frame
-			FlxG.overlap(coins,player,getCoin);
+			//Check if currentPlayer collected a coin or coins this frame
+			FlxG.overlap(coins,currentPlayer,getCoin);
 			
-			//Check to see if the player touched the exit door this frame
-			FlxG.overlap(exit,player,win);
+			//Check to see if the currentPlayer touched the exit door this frame
+			FlxG.overlap(exit,currentPlayer,win);
 			
-			//Finally, bump the player up against the level
-			FlxG.collide(level,player);
+			//Finally, bump the currentPlayer up against the level
+			FlxG.collide(level,currentPlayer);
 			
-			//Check for player lose conditions
-			if(player.y > FlxG.height)
+			//Check for currentPlayer lose conditions
+			if(currentPlayer.y > FlxG.height)
 			{
 				FlxG.score = 1; //sets status.text to "Aww, you died!"
 				FlxG.resetState();
 			}
 		}
 		
-		//Called whenever the player touches a coin
+		//Called whenever the currentPlayer touches a coin
 		public function getCoin(Coin:FlxSprite,Player:FlxSprite):void
 		{
 			Coin.kill();
@@ -189,7 +238,7 @@ package
 			}
 		}
 		
-		//Called whenever the player touches the exit
+		//Called whenever the currentPlayer touches the exit
 		public function win(Exit:FlxSprite,Player:FlxSprite):void
 		{
 			status.text = "Yay, you won!";
