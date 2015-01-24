@@ -12,8 +12,8 @@ package
 		public var coins:FlxGroup;
 		public var exit:FlxSprite;
 		private var levels:Array;
-		public var tileWidth;
-		public var tileHeight;
+		public var tileWidth:int;
+		public var tileHeight:int;
 		
 		public function Map() : void
 		{
@@ -48,7 +48,7 @@ package
 			//var levelPixels:BitmapData = (new GameAssets.LevelImage()).bitmapData;
 			var levelPixels:BitmapData = levels[0];
 			coins = new FlxGroup();
-			loadMap(FlxTilemap.bitmapToCSV(levelPixels), FlxTilemap.ImgAuto, 0, 0, FlxTilemap.AUTO);
+			loadMap(FlxTilemap.bitmapToCSV(levelPixels), GameAssets.TileMap, 32, 32, FlxTilemap.AUTO);
 			tileWidth = _tileWidth;
 			tileHeight = _tileHeight;
 		}
