@@ -21,6 +21,7 @@ package
 			levels = new Array();
 			//levelObjects = new Array();
 			levels.push(GameAssets.LevelImage);
+			levels.push(GameAssets.Level1);
 			//levelObjects.push(GameAssets.LevelImage);
 		}
 		
@@ -55,7 +56,7 @@ package
 		
 		public function loadTiles(num:uint):void
 		{
-			loadMap(imageToCSV(levels[num]), GameAssets.TileMap, 32, 32, FlxTilemap.OFF);
+			loadMap(imageToCSV(levels[1]), GameAssets.TileMap, 32, 32, FlxTilemap.OFF);
 		}
 		
 		public function loadObjects(num:uint):void
