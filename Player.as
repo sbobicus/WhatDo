@@ -6,9 +6,9 @@ package
 	{
 		public var index:int;
 		public var flames:Flames;
+		public static var flameEmitter:FlxEmitter;
 		
 		public static var buttons:Array;
-		public static var flameEmitter:FlxEmitter;
 		public static const KEY_UP:int = 0;
 		public static const KEY_LEFT:int = 1;
 		public static const KEY_DOWN:int = 2;
@@ -34,27 +34,41 @@ package
 			
 			flames = new Flames(0, 0, null);
 			flames.exists = false;
-			
-			var emitter:FlxEmitter = new FlxEmitter(100,100); //x and y of the emitter
-			var particles:int = 5;
+			 
+		}
+		
+		public static function createParticles() : void
+		{
+			var particles:int = 20;			
+			flameEmitter = new FlxEmitter(0, 0, particles); //x and y of the emitter
+
 			 
 			for(var i:int = 0; i < particles; i++)
 			{
 				var particle:FlxParticle = new FlxParticle();
 				particle.makeGraphic(2, 2, 0xffffffff);
 				particle.exists = false;
-				emitter.add(particle);
+				particle.friction = 100;
+				particle.lifespan = 0.5;
+				flameEmitter.add(particle);
 			}
-			 
-			add(emitter);
-			emitter.start();
+			
+			flameEmitter.lifespan = 0.25;
+			flameEmitter.particleDrag = new FlxPoint(100, 100);
+			flameEmitter.minParticleSpeed = new FlxPoint( -50, 50);
+			flameEmitter.maxParticleSpeed = new FlxPoint(50, 150);
+			flameEmitter.gravity = 500;
+			flameEmitter.bounce = 1;
+			
+			
+			flameEmitter.start(false, 0.5, 0.01, 10);
 		}
-		
 		
 		
 		
 		public function flameOn(tiles:Map) : void
 		{
+			flameEmitter.on = true;
 			flames.exists = true;
 			flames.play("whoosh", true);
 			flames.timer = 0;
@@ -88,13 +102,15 @@ package
 		
 		public function flameOff() : void
 		{
-			flames.exists = false;
+			flameEmitter.on = false;
 		}
 		
 		
 		public override function postUpdate() : void
 		{
 			super.postUpdate();
+			flameEmitter.x = x;
+			flameEmitter.y = y;
 		}
 		
 		public static function initButtons() : void

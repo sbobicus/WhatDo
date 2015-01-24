@@ -55,14 +55,16 @@ package
 			add(map.spawn);
 			add(map.coins);
 			add(map.enemies);
-			
+
 			//Create currentPlayer (a red box)
 			Player.initButtons();
 			player1 = createPlayer(0, GameAssets.Player1Image);
 			player2 = createPlayer(1, GameAssets.Player2Image);
 			add(player2);
 			add(player2.flames);
-			
+			Player.createParticles();
+			add(Player.flameEmitter);
+						
 			currentPlayer = player2;
 			switchPlayers();
 			
@@ -134,18 +136,18 @@ package
 				add(currentPlayer.flames);
 			}
 			
-			FlxG.shake(0.001, 0.25);
-			FlxG.flash(0x55ffffff, 0.2);
+			//FlxG.shake(0.001, 0.25);
+			//FlxG.flash(0x55ffffff, 0.2);
 		}
 		
 		override public function update():void
 		{
-			FlxG.camera.follow(currentPlayer, FlxCamera.STYLE_LOCKON);
-			var x:uint = map.getBounds().left;
-			var y:uint = map.getBounds().top;
-			var a:uint = map.getBounds().right;
-			var b:uint = map.getBounds().bottom;
-			FlxG.camera.setBounds(x,y,a,b,true);
+			FlxG.camera.follow(currentPlayer, FlxCamera.STYLE_PLATFORMER);
+			//var x:uint = map.getBounds().left;
+			//var y:uint = map.getBounds().top;
+			//var a:uint = map.getBounds().right;
+			//var b:uint = map.getBounds().bottom;
+			//FlxG.camera.setBounds(x,y,a,b,true);
 			time += FlxG.elapsed;
 			score.text = "" + currentPlayer.flames.y;
 			if (time > switchTime)
@@ -174,7 +176,7 @@ package
 			}
 			else 
 			{
-				//currentPlayer.flameOff();
+				currentPlayer.flameOff();
 			}
 			
 			
@@ -213,6 +215,7 @@ package
 			
 			//Finally, bump the currentPlayer up against the map
 			FlxG.collide(map, currentPlayer);
+			FlxG.collide(map, Player.flameEmitter);
 			
 			FlxG.collide(map, map.enemies);
 			
