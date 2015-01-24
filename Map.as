@@ -1,7 +1,6 @@
 package
 {
 	import flash.display.BitmapData;
-	import flash.utils.ByteArray;
 	
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxSprite;
@@ -12,6 +11,7 @@ package
 		public var coins:FlxGroup;
 		public var exit:FlxSprite;
 		private var levels:Array;
+		private var levelObjects:Array;
 		public var tileWidth:int;
 		public var tileHeight:int;
 		
@@ -19,7 +19,9 @@ package
 		{
 			super();
 			levels = new Array();
-			levels.push((new GameAssets.LevelImage()).bitmapData);
+			//levelObjects = new Array();
+			levels.push(GameAssets.LevelImage);
+			//levelObjects.push(GameAssets.LevelImage);
 		}
 		
 		public function setData(data:Array, width:int):void
@@ -43,16 +45,25 @@ package
 			exit.exists = false;
 		}
 		
-		public function loadLevel():void
+		public function loadLevel(num:uint):void
 		{
-			//var levelPixels:BitmapData = (new GameAssets.LevelImage()).bitmapData;
-			var levelPixels:BitmapData = levels[0];
 			coins = new FlxGroup();
-			loadMap(FlxTilemap.bitmapToCSV(levelPixels), GameAssets.TileMap, 32, 32, FlxTilemap.OFF);
+			loadTiles(num);
+			loadObjects(num);
 			tileWidth = _tileWidth;
 			tileHeight = _tileHeight;
 		}
 		
+		public function loadTiles(num:uint):void
+		{
+			loadMap(imageToCSV(levels[num]), GameAssets.TileMap, 32, 32, FlxTilemap.OFF);
+		}
+		
+		public function loadObjects(num:uint):void
+		{
+			//var bitmap:BitmapData = (new levelObjects[0]).bitmapData;
+			coins = new FlxGroup();
+		}
 	}
 
 }
