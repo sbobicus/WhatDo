@@ -201,10 +201,12 @@ package
 		
 			if (currentPlayer.isKeyPressed(Player.KEY_LEFT))
 			{
+				currentPlayer.facing = FlxObject.LEFT;
 				currentPlayer.acceleration.x = -currentPlayer.maxVelocity.x * 4;
 			}
 			if (currentPlayer.isKeyPressed(Player.KEY_RIGHT))
 			{
+				currentPlayer.facing = FlxObject.RIGHT;
 				currentPlayer.acceleration.x = currentPlayer.maxVelocity.x * 4;
 			}
 			if (currentPlayer.keyJustPressed(Player.KEY_JUMP))
@@ -212,15 +214,7 @@ package
 				currentPlayer.velocity.y = -currentPlayer.maxVelocity.y / 2;
 			}
 			
-			if (currentPlayer.velocity.x > 0)
-			{
-				currentPlayer.facing = FlxObject.RIGHT;
-			}
-			else
-			{
-				currentPlayer.facing = FlxObject.LEFT;
-			}
-			
+
 			
 			if (currentPlayer.isTouching(FlxObject.FLOOR))
 			{
