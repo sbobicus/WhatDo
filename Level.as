@@ -67,7 +67,7 @@ package
 			
 			//Create a new tilemap using our map data
 			map = new Map();
-			map.setData(data, 40);
+			map.loadLevel();
 			add(map);
 			
 			//Create the map exit, a dark gray box that is hidden at first

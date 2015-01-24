@@ -25,6 +25,11 @@ package
 			addAnimation("run", [4, 5, 6, 7], 1.0 / 0.08, true);
 			addAnimation("jump", [8, 9], 1.0 / 0.05, true);
 			addAnimation("fall", [12, 13], 1.0 / 0.05, true);
+			
+			width = 16;
+			height = 24;
+			offset.x = 8;
+			offset.y = 16;
 		}
 		
 		

@@ -3,7 +3,6 @@ package
 	import flash.display.BitmapData;
 	import flash.utils.ByteArray;
 	
-	
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxTilemap;
@@ -12,14 +11,16 @@ package
 	{
 		public var coins:FlxGroup;
 		public var exit:FlxSprite;
+		private var levels:Array;
 		
-		
-		public function Level() : void
+		public function Map() : void
 		{
-			
+			super();
+			levels = new Array();
+			levels.push((new GameAssets.LevelImage()).bitmapData);
 		}
 		
-		public function setData(data:Array, width:int)
+		public function setData(data:Array, width:int):void
 		{
 			coins = new FlxGroup();
 			loadMap(FlxTilemap.arrayToCSV(data,width), FlxTilemap.ImgAuto, 0, 0,FlxTilemap.AUTO);
@@ -40,11 +41,12 @@ package
 			exit.exists = false;
 		}
 		
-		public function loadLevel(Graphic:Class):void
+		public function loadLevel():void
 		{
-			var levelPixels:BitmapData = (new GameAssets.LevelImage).bitmapData;
-			var bytes:ByteArray = levelPixels.getPixels(levelPixels.rect)
-			var level:ByteArray;	
+			//var levelPixels:BitmapData = (new GameAssets.LevelImage()).bitmapData;
+			var levelPixels:BitmapData = levels[0];
+			coins = new FlxGroup();
+			loadMap(FlxTilemap.bitmapToCSV(levelPixels,width), FlxTilemap.ImgAuto, 0, 0,FlxTilemap.AUTO);
 		}
 		
 	}

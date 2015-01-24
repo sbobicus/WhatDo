@@ -1,8 +1,6 @@
 package 
 {
 	import org.flixel.*;
-	import org.flixel.FlxGame; //Allows you to refer to flixel objects in your code
-	import Level;
 	import MenuState;
 	[SWF(width="960", height="540", backgroundColor="#000000")] //Set the size and color of the Flash file
 	
