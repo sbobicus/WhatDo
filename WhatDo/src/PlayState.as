@@ -17,6 +17,8 @@ package
 		public var time:Number = 0.0;
 		public var switchTime:Number = 1.0;
 		
+		public var multiplayer:Boolean = true;
+		
 		override public function create():void
 		{
 			FlxG.framerate = 60;
@@ -123,7 +125,6 @@ package
 			Player.initButtons();
 			player1 = createPlayer(0, 0xffaa1111);
 			player2 = createPlayer(1, 0xff1111aa);
-			add(player1);
 			add(player2);
 			
 			currentPlayer = player2;
@@ -167,23 +168,25 @@ package
 		
 		public function switchPlayers():void 
 		{
-				if (currentPlayer == player1)
-				{
-					player2.x = player1.x;
-					player2.y = player1.y;
-					remove(player1);
-					currentPlayer = player2;
-					
-					add(currentPlayer);
-				}
-				else
-				{
-					player1.x = player2.x;
-					player1.y = player2.y;
-					remove(player2);
-					currentPlayer = player1;
-					add(currentPlayer);
-				}
+			if (!multiplayer) return;
+			
+			if (currentPlayer == player1)
+			{
+				player2.x = player1.x;
+				player2.y = player1.y;
+				remove(player1);
+				currentPlayer = player2;
+				
+				add(currentPlayer);
+			}
+			else
+			{
+				player1.x = player2.x;
+				player1.y = player2.y;
+				remove(player2);
+				currentPlayer = player1;
+				add(currentPlayer);
+			}
 		}
 		
 		override public function update():void
