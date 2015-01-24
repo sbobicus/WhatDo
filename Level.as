@@ -12,6 +12,8 @@ package
 		public var player1:Player;
 		public var player2:Player;
 		
+		public var enemies:FlxGroup;
+		
 		public var score:FlxText;
 		public var status:FlxText;
 		
@@ -30,7 +32,7 @@ package
 		{
 			FlxG.framerate = 60;
 			//Set the background color to light gray (0xAARRGGBB)
-			FlxG.bgColor = 0xffaaaaaa;
+			FlxG.bgColor = 0xFF66CCFF;
 			
 			//Create a new tilemap using our map data
 			map = new Map();
@@ -117,6 +119,11 @@ package
 				case 1: status.text = "Aww, you died!"; break;
 			}
 			add(status);
+			
+			enemies = new FlxGroup();
+			enemies.add(new Crawler(map.getBounds().width / 2, 0));
+			
+			add(enemies);
 		}
 		
 		public function createPlayer(index:int, graphic:Class) : Player
@@ -231,12 +238,31 @@ package
 			//Finally, bump the currentPlayer up against the map
 			FlxG.collide(map, currentPlayer);
 			
+			FlxG.collide(map, enemies);
+			
+			if (FlxG.overlap(enemies, currentPlayer))
+			{
+				FlxG.score = 1; //sets status.text to "Aww, you died!"
+				FlxG.resetState();
+			}
+			
+			
+			if (currentPlayer.flames.exists)
+			{
+				FlxG.overlap(currentPlayer.flames, enemies, FlamesHitEnemy);
+			}
+			
 			//Check for currentPlayer lose conditions
 			if(!FlxG.worldBounds.overlaps(new FlxRect(currentPlayer.x, currentPlayer.y, 1, 1)))
 			{
 				FlxG.score = 1; //sets status.text to "Aww, you died!"
 				FlxG.resetState();
 			}
+		}
+		
+		private function FlamesHitEnemy(flames:FlxSprite, enemy:FlxSprite):void
+		{
+			enemy.exists = false;
 		}
 		
 		//Called whenever the currentPlayer touches a coin
