@@ -1,10 +1,7 @@
-package 
+package
 {
 	import org.flixel.*;
-	/**
-	 * ...
-	 * @author mklingen
-	 */
+
 	public class Level extends FlxTilemap
 	{
 		public var coins:FlxGroup;

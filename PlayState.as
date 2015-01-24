@@ -1,6 +1,8 @@
-package WhatD
+package 
 {
 	import org.flixel.*;
+	import Level;
+	import Player;
 
 	public class PlayState extends FlxState
 	{
