@@ -17,10 +17,22 @@ package
 		
 		public function Player(myIndex:int, x:Number, y:Number, graphic:Class) 
 		{
-			super(x, y, graphic);
+			super(x, y, null);
 			index = myIndex;
+			loadGraphic(graphic, true, true, 32, 40, false);
+			
+			addAnimation("idle", [0], 1, true);
+			addAnimation("run", [4, 5, 6, 7], 1.0 / 0.08, true);
+			addAnimation("jump", [8, 9], 1.0 / 0.05, true);
+			addAnimation("fall", [12, 13], 1.0 / 0.05, true);
 		}
 		
+		
+		public override function postUpdate() : void
+		{
+		
+			super.postUpdate();
+		}
 		
 		public static function initButtons() : void
 		{
