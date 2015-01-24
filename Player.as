@@ -45,14 +45,14 @@ package
 			flames.exists = true;
 			flames.timer = 0;
 			var tileX:int = x / tiles.tileWidth;
-			for (var dy:Number = y; dy < FlxG.height; dy += tiles.tileHeight)
+			for (var dy:Number = y; dy < FlxG.worldBounds.height; dy += tiles.tileHeight / 2)
 			{
 				var tileY:int = dy / tiles.tileHeight;
 				var tile:uint = tiles.getTile(tileX, tileY);
 				
 				if (tile > 0)
 				{
-					flames.y = dy - 8;
+					flames.y = (Math.round(dy / tiles.tileHeight) - 1) * tiles.tileHeight + tiles.tileHeight - 16;
 					flames.x = x;
 					return;
 				}

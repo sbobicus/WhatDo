@@ -48,7 +48,7 @@ package
 			//var levelPixels:BitmapData = (new GameAssets.LevelImage()).bitmapData;
 			var levelPixels:BitmapData = levels[0];
 			coins = new FlxGroup();
-			loadMap(FlxTilemap.bitmapToCSV(levelPixels), GameAssets.TileMap, 32, 32, FlxTilemap.AUTO);
+			loadMap(FlxTilemap.bitmapToCSV(levelPixels), GameAssets.TileMap, 32, 32, FlxTilemap.OFF);
 			tileWidth = _tileWidth;
 			tileHeight = _tileHeight;
 		}

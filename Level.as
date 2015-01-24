@@ -193,6 +193,8 @@ package
 		
 		override public function update():void
 		{
+			FlxG.camera.follow(currentPlayer, FlxCamera.STYLE_PLATFORMER);
+			FlxG.worldBounds = map.getBounds();
 			time += FlxG.elapsed;
 			score.text = "" + currentPlayer.flames.y;
 			if (time > switchTime)
@@ -263,7 +265,7 @@ package
 			FlxG.collide(map, currentPlayer);
 			
 			//Check for currentPlayer lose conditions
-			if(currentPlayer.y > FlxG.height)
+			if(!FlxG.worldBounds.overlaps(new FlxRect(currentPlayer.x, currentPlayer.y, 1, 1)))
 			{
 				FlxG.score = 1; //sets status.text to "Aww, you died!"
 				FlxG.resetState();
