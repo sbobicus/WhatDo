@@ -1,6 +1,5 @@
 package
 {
-	import flash.display.BitmapData;
 	import flash.utils.ByteArray;
 	
 	import org.flixel.FlxGroup;
@@ -22,7 +21,7 @@ package
 			levels = new Array();
 			//levelObjects = new Array();
 			//levels.push(GameAssets.Level1);
-			levels.push(new LevelData(GameAssets.LevelImage, LevelData.TYPE_BITMAP));
+			levels.push(new LevelData(GameAssets.Level1, LevelData.TYPE_BITMAP));
 			//levels.push(new LevelData(GameAssets.TestMap, LevelData.TYPE_CSV));
 			//levelObjects.push(GameAssets.LevelImage);
 		}
@@ -78,7 +77,7 @@ package
 		
 		public function loadCSV(asset:Class):void
 		{
-			var myByteArray = new asset;
+			var myByteArray:ByteArray = new asset;
 			var myString:String = myByteArray.readUTFBytes(myByteArray.length);
 			loadMap(myString, GameAssets.TileMap, 16, 16, FlxTilemap.OFF, 1);
 		}

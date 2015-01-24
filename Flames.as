@@ -6,8 +6,8 @@ package
 
 	public class Flames extends FlxSprite 
 	{
-		var timer:Number = 0;
-		var exitTime:Number = 0.5;
+		public var timer:Number = 0;
+		public var exitTime:Number = 0.5;
 		
 		public function Flames(X:Number=0, Y:Number=0, SimpleGraphic:Class=null) 
 		{

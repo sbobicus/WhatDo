@@ -1,9 +1,17 @@
 package 
 {	
-	import org.flixel.*;
 	import Map;
+	
 	import Player;
+	
+	import org.flixel.FlxCamera;
+	import org.flixel.FlxG;
+	import org.flixel.FlxGroup;
+	import org.flixel.FlxObject;
+	import org.flixel.FlxRect;
+	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
+	import org.flixel.FlxText;
 	
 	public class Level extends FlxState 
 	{
@@ -55,43 +63,6 @@ package
 			map.createCoin(5,2);
 			map.createCoin(15,11);
 			map.createCoin(16,11);
-			
-			//Bottom left coins
-			//map.createCoin(3,16);
-			//map.createCoin(4,16);
-			//map.createCoin(1,23);
-			//map.createCoin(2,23);
-			//map.createCoin(3,23);
-			//map.createCoin(4,23);
-			//map.createCoin(5,23);
-			//map.createCoin(12,26);
-			//map.createCoin(13,26);
-			//map.createCoin(17,20);
-			//map.createCoin(18,20);
-			
-			//Top right coins
-			//map.createCoin(21,4);
-			//map.createCoin(26,2);
-			//map.createCoin(29,2);
-			//map.createCoin(31,5);
-			//map.createCoin(34,5);
-			//map.createCoin(36,8);
-			//map.createCoin(33,11);
-			//map.createCoin(31,11);
-			//map.createCoin(29,11);
-			//map.createCoin(27,11);
-			//map.createCoin(25,11);
-			//map.createCoin(36,14);
-			
-			//Bottom right coins
-			//map.createCoin(38,17);
-			//map.createCoin(33,17);
-			//map.createCoin(28,19);
-			//map.createCoin(25,20);
-			//map.createCoin(18,26);
-			//map.createCoin(22,26);
-			//map.createCoin(26,26);
-			//map.createCoin(30,26);
 
 			add(map.coins);
 			
@@ -128,7 +99,7 @@ package
 		
 		public function createPlayer(index:int, graphic:Class) : Player
 		{
-			var player = new Player(index, FlxG.width/2 - 5, 0, graphic);
+			var player:Player = new Player(index, FlxG.width/2 - 5, 0, graphic);
 			player.maxVelocity.x = 150;
 			player.maxVelocity.y = 250;
 			player.acceleration.y = 300;
@@ -181,8 +152,12 @@ package
 		
 		override public function update():void
 		{
-			FlxG.camera.follow(currentPlayer, FlxCamera.STYLE_PLATFORMER);
-			FlxG.worldBounds = map.getBounds();
+			FlxG.camera.follow(currentPlayer, FlxCamera.STYLE_LOCKON);
+			var x:uint = map.getBounds().left;
+			var y:uint = map.getBounds().top;
+			var a:uint = map.getBounds().right;
+			var b:uint = map.getBounds().bottom;
+			FlxG.camera.setBounds(x,y,a,b,true);
 			time += FlxG.elapsed;
 			score.text = "" + currentPlayer.flames.y;
 			if (time > switchTime)
