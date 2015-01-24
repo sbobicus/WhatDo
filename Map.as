@@ -1,7 +1,6 @@
 package
 {
 	import flash.display.BitmapData;
-	import flash.utils.ByteArray;
 	
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxSprite;
@@ -13,6 +12,8 @@ package
 		public var exit:FlxSprite;
 		private var levels:Array;
 		private var levelObjects:Array;
+		public var tileWidth;
+		public var tileHeight;
 		
 		public function Map() : void
 		{
@@ -48,6 +49,8 @@ package
 		{
 			loadTiles(num);
 			loadObjects(num);
+			tileWidth = _tileWidth;
+			tileHeight = _tileHeight;
 		}
 		
 		public function loadTiles(num:uint):void
