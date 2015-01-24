@@ -12,12 +12,15 @@ package
 		public var coins:FlxGroup;
 		public var exit:FlxSprite;
 		private var levels:Array;
+		private var levelObjects:Array;
 		
 		public function Map() : void
 		{
 			super();
 			levels = new Array();
-			levels.push((new GameAssets.LevelImage()).bitmapData);
+			//levelObjects = new Array();
+			levels.push(GameAssets.LevelImage);
+			//levelObjects.push(GameAssets.LevelImage);
 		}
 		
 		public function setData(data:Array, width:int):void
@@ -41,14 +44,22 @@ package
 			exit.exists = false;
 		}
 		
-		public function loadLevel():void
+		public function loadLevel(num:uint):void
 		{
-			//var levelPixels:BitmapData = (new GameAssets.LevelImage()).bitmapData;
-			var levelPixels:BitmapData = levels[0];
-			coins = new FlxGroup();
-			loadMap(FlxTilemap.bitmapToCSV(levelPixels,width), FlxTilemap.ImgAuto, 0, 0,FlxTilemap.AUTO);
+			loadTiles(num);
+			loadObjects(num);
 		}
 		
+		public function loadTiles(num:uint):void
+		{
+			loadMap(imageToCSV(levels[num]), FlxTilemap.ImgAuto, 0, 0,FlxTilemap.AUTO);
+		}
+		
+		public function loadObjects(num:uint):void
+		{
+			//var bitmap:BitmapData = (new levelObjects[0]).bitmapData;
+			coins = new FlxGroup();
+		}
 	}
 
 }
