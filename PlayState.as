@@ -2,11 +2,12 @@ package
 {
 	import org.flixel.*;
 	import Level;
+	import Map;
 	import Player;
 
 	public class PlayState extends FlxState
 	{
-		public var level:Level;
+		public var level:Map;
 		public var exit:FlxSprite;
 		public var currentPlayer:Player;
 		public var player1:Player;
@@ -64,7 +65,7 @@ package
 				1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 );
 			
 			//Create a new tilemap using our level data
-			level = new Level();
+			level = new Map();
 			level.setData(data, 40);
 			add(level);
 			

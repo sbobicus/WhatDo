@@ -1,51 +1,252 @@
-package
-{
-	import flash.display.BitmapData;
-	import flash.utils.ByteArray;
+package 
+{	
+	import org.flixel.*;
+	import Map;
+	import Player;
+	import org.flixel.FlxState;
 	
-	import org.flixel.FlxGroup;
-	import org.flixel.FlxSprite;
-	import org.flixel.FlxTilemap;
-
-	public class Level extends FlxTilemap
+	public class Level extends FlxState 
 	{
-		public var coins:FlxGroup;
-		public var exit:FlxSprite;
+		public var map:Map;
+		public var currentPlayer:Player;
+		public var player1:Player;
+		public var player2:Player;
+		
+		public var score:FlxText;
+		public var status:FlxText;
+		
+		public var time:Number = 0.0;
+		public var switchTime:Number = 1.0;
+		
+		public var multiplayer:Boolean = false;
 		
 		
-		public function Level() 
+		public function Level()
 		{
+			super();
+		}
+		
+		override public function create():void
+		{
+			FlxG.framerate = 60;
+			//Set the background color to light gray (0xAARRGGBB)
+			FlxG.bgColor = 0xffaaaaaa;
 			
+			//Design your platformer map with 1s and 0s (at 40x30 to fill 320x240 screen)
+			var data:Array = new Array(
+				1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1,
+				1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1,
+				1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1,
+				1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+				1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1,
+				1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1,
+				1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1,
+				1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1,
+				1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1,
+				1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+				1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+				1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+				1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+				1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1,
+				1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 );
+			
+			//Create a new tilemap using our map data
+			map = new Map();
+			map.setData(data, 40);
+			add(map);
+			
+			//Create the map exit, a dark gray box that is hidden at first
+			map.createExit(35, 25);
+			add(map.exit);
+			
+			//Create coins to collect (see createCoin() function below for more info)
+			
+			//Top left coins
+			map.createCoin(18,4);
+			map.createCoin(12,4);
+			map.createCoin(9,4);
+			map.createCoin(8,11);
+			map.createCoin(1,7);
+			map.createCoin(3,4);
+			map.createCoin(5,2);
+			map.createCoin(15,11);
+			map.createCoin(16,11);
+			
+			//Bottom left coins
+			//map.createCoin(3,16);
+			//map.createCoin(4,16);
+			//map.createCoin(1,23);
+			//map.createCoin(2,23);
+			//map.createCoin(3,23);
+			//map.createCoin(4,23);
+			//map.createCoin(5,23);
+			//map.createCoin(12,26);
+			//map.createCoin(13,26);
+			//map.createCoin(17,20);
+			//map.createCoin(18,20);
+			
+			//Top right coins
+			//map.createCoin(21,4);
+			//map.createCoin(26,2);
+			//map.createCoin(29,2);
+			//map.createCoin(31,5);
+			//map.createCoin(34,5);
+			//map.createCoin(36,8);
+			//map.createCoin(33,11);
+			//map.createCoin(31,11);
+			//map.createCoin(29,11);
+			//map.createCoin(27,11);
+			//map.createCoin(25,11);
+			//map.createCoin(36,14);
+			
+			//Bottom right coins
+			//map.createCoin(38,17);
+			//map.createCoin(33,17);
+			//map.createCoin(28,19);
+			//map.createCoin(25,20);
+			//map.createCoin(18,26);
+			//map.createCoin(22,26);
+			//map.createCoin(26,26);
+			//map.createCoin(30,26);
+
+			add(map.coins);
+			
+			//Create currentPlayer (a red box)
+			Player.initButtons();
+			player1 = createPlayer(0, 0xffaa1111);
+			player2 = createPlayer(1, 0xff1111aa);
+			add(player2);
+			
+			currentPlayer = player2;
+			switchPlayers();
+			
+			score = new FlxText(2,2,80);
+			score.shadow = 0xff000000;
+			score.text = "SCORE: "+(map.coins.countDead()*100);
+			add(score);
+			
+			status = new FlxText(FlxG.width-160-2,2,160);
+			status.shadow = 0xff000000;
+			status.alignment = "right";
+			switch(FlxG.score)
+			{
+				case 0: status.text = "Collect coins."; break;
+				case 1: status.text = "Aww, you died!"; break;
+			}
+			add(status);
 		}
 		
-		public function setData(data:Array, width:int):void
+		public function createPlayer(index:int, color:uint) : Player
 		{
-			coins = new FlxGroup();
-			loadMap(FlxTilemap.arrayToCSV(data,width), FlxTilemap.ImgAuto, 0, 0,FlxTilemap.AUTO);
+			var player = new Player(index, FlxG.width/2 - 5, 0, null);
+			player.makeGraphic(10,12,color);
+			player.maxVelocity.x = 80;
+			player.maxVelocity.y = 200;
+			player.acceleration.y = 200;
+			player.drag.x = player.maxVelocity.x * 4;
+			return player;
 		}
 		
-		public function loadLevel(Graphic:Class):void
+		public function switchPlayers():void 
 		{
-			var levelPixels:BitmapData = (new GameAssets.LevelImage).bitmapData;
-			var bytes:ByteArray = levelPixels.getPixels(levelPixels.rect)
-			var level:ByteArray;	
+			if (!multiplayer) return;
+			
+			if (currentPlayer == player1)
+			{
+				player2.x = player1.x;
+				player2.y = player1.y;
+				remove(player1);
+				currentPlayer = player2;
+				
+				add(currentPlayer);
+			}
+			else
+			{
+				player1.x = player2.x;
+				player1.y = player2.y;
+				remove(player2);
+				currentPlayer = player1;
+				add(currentPlayer);
+			}
+			
+			FlxG.shake(0.001, 0.25);
 		}
 		
-		//creates a new coin located on the specified tile
-		public function createCoin(X:uint,Y:uint):void
+		override public function update():void
 		{
-			var coin:FlxSprite = new FlxSprite(X * _tileWidth + 3, Y * _tileHeight + 2);
-			coin.makeGraphic(2,4,0xffffff00);
-			coins.add(coin);
+			time += FlxG.elapsed;
+			score.text = "" + time;
+			if (time > switchTime)
+			{
+				switchPlayers();
+				time = 0;
+			}
+			
+			//Player movement and controls
+			currentPlayer.acceleration.x = 0;
+		
+			if(currentPlayer.isKeyPressed(Player.KEY_LEFT))
+				currentPlayer.acceleration.x = -currentPlayer.maxVelocity.x * 4;
+			if(currentPlayer.isKeyPressed(Player.KEY_RIGHT))
+				currentPlayer.acceleration.x = currentPlayer.maxVelocity.x * 4;
+			if(currentPlayer.keyJustPressed(Player.KEY_JUMP))
+				currentPlayer.velocity.y = -currentPlayer.maxVelocity.y / 2;
+			
+			//Updates all the objects appropriately
+			super.update();
+
+			//Check if currentPlayer collected a coin or coins this frame
+			FlxG.overlap(map.coins, currentPlayer, getCoin);
+			
+			//Check to see if the currentPlayer touched the exit door this frame
+			FlxG.overlap(map.exit, currentPlayer, win);
+			
+			//Finally, bump the currentPlayer up against the map
+			FlxG.collide(map, currentPlayer);
+			
+			//Check for currentPlayer lose conditions
+			if(currentPlayer.y > FlxG.height)
+			{
+				FlxG.score = 1; //sets status.text to "Aww, you died!"
+				FlxG.resetState();
+			}
 		}
 		
-		public function createExit(X:uint, Y:uint):void
+		//Called whenever the currentPlayer touches a coin
+		public function getCoin(Coin:FlxSprite,Player:FlxSprite):void
 		{
-			exit = new FlxSprite(X* _tileWidth + 1,Y * _tileHeight);
-			exit.makeGraphic(14,16,0xff3f3f3f);
-			exit.exists = false;
+			Coin.kill();
+			score.text = "SCORE: "+(map.coins.countDead()*100);
+			if(map.coins.countLiving() == 0)
+			{
+				status.text = "Find the exit.";
+				map.exit.exists = true;
+			}
 		}
 		
+		//Called whenever the currentPlayer touches the exit
+		public function win(Exit:FlxSprite,Player:FlxSprite):void
+		{
+			status.text = "Yay, you won!";
+			score.text = "SCORE: 5000";
+			Player.kill();
+			WhatDo.nextLevel();
+		}
 	}
 
 }
