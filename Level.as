@@ -18,8 +18,9 @@ package
 		public var time:Number = 0.0;
 		public var switchTime:Number = 1.0;
 		
-		public var multiplayer:Boolean = false;
+		public var multiplayer:Boolean = true;
 		
+		public var backgroundSprite:FlxSprite;
 		
 		public function Level()
 		{
@@ -30,12 +31,17 @@ package
 		{
 			FlxG.framerate = 60;
 			//Set the background color to light gray (0xAARRGGBB)
-			FlxG.bgColor = 0xFF66CCFF;
+			FlxG.bgColor = 0xFF666666;
+			
+			backgroundSprite = new FlxSprite(0, 0);
+
 			
 			//Create a new tilemap using our map data
 			map = new Map(new LevelData(GameAssets.TestMap, LevelData.TYPE_CSV), new LevelData(GameAssets.TestMapItems, LevelData.TYPE_CSV));
 			map.loadLevel();
 			map.spawn = new FlxObject(map.getBounds().width / 2, map.getBounds().height / 2);
+			backgroundSprite.makeGraphic(map.getBounds().width, map.getBounds().height, 0xff33CCFF);
+			add(backgroundSprite);
 			add(map);
 			add(map.exit);
 			add(map.spawn);
