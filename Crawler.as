@@ -20,7 +20,8 @@ package
 			acceleration.y = 300;
 			drag.x = maxVelocity.x * 4;
 			
-			makeGraphic(32, 32);
+			loadGraphic(GameAssets.Robot1, true, true, 32, 32);
+			addAnimation("roll", [0, 1, 2], 1.0 / 0.08, true);
 		}
 		
 		public override function destroy() : void
@@ -31,6 +32,7 @@ package
 		public override function postUpdate() : void
 		{
 			super.postUpdate();
+			play("roll");
 			time += FlxG.elapsed * Math.random();
 			
 			if (time > turnTime)
@@ -42,6 +44,7 @@ package
 			
 			if (turnDir)
 			{
+				facing = FlxObject.RIGHT;
 				if (Math.abs(velocity.y) < 10)
 				{
 					acceleration.x = 100;
@@ -53,6 +56,7 @@ package
 			}
 			else
 			{
+				facing = FlxObject.LEFT;
 				if (Math.abs(velocity.y) < 10)
 				{
 					acceleration.x = -100;

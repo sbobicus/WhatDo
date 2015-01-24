@@ -20,8 +20,6 @@ package
 		public var player1:Player;
 		public var player2:Player;
 		
-		public var enemies:FlxGroup;
-		
 		public var score:FlxText;
 		public var status:FlxText;
 		
@@ -43,28 +41,14 @@ package
 			FlxG.bgColor = 0xFF66CCFF;
 			
 			//Create a new tilemap using our map data
-			map = new Map();
-			map.loadLevel(0);
+			map = new Map(new LevelData(GameAssets.TestMap, LevelData.TYPE_CSV), new LevelData(GameAssets.TestMapItems, LevelData.TYPE_CSV));
+			map.loadLevel();
+			map.spawn = new FlxObject(map.getBounds().width / 2, map.getBounds().height / 2);
 			add(map);
-			
-			//Create the map exit, a dark gray box that is hidden at first
-			map.createExit(35, 25);
 			add(map.exit);
-			
-			//Create coins to collect (see createCoin() function below for more info)
-			
-			//Top left coins
-			map.createCoin(18,4);
-			map.createCoin(12,4);
-			map.createCoin(9,4);
-			map.createCoin(8,11);
-			map.createCoin(1,7);
-			map.createCoin(3,4);
-			map.createCoin(5,2);
-			map.createCoin(15,11);
-			map.createCoin(16,11);
-
+			add(map.spawn);
 			add(map.coins);
+			add(map.enemies);
 			
 			//Create currentPlayer (a red box)
 			Player.initButtons();
@@ -90,16 +74,12 @@ package
 				case 1: status.text = "Aww, you died!"; break;
 			}
 			add(status);
-			
-			enemies = new FlxGroup();
-			enemies.add(new Crawler(map.getBounds().width / 2, 0));
-			
-			add(enemies);
+			add(map.enemies);
 		}
 		
 		public function createPlayer(index:int, graphic:Class) : Player
 		{
-			var player:Player = new Player(index, FlxG.width/2 - 5, 0, graphic);
+			var player:Player = new Player(index, map.spawn.x, map.spawn.y, graphic);
 			player.maxVelocity.x = 150;
 			player.maxVelocity.y = 250;
 			player.acceleration.y = 300;
@@ -143,6 +123,7 @@ package
 				remove(player2);
 				remove(currentPlayer.flames);
 				currentPlayer = player1;
+				
 				add(currentPlayer);
 				add(currentPlayer.flames);
 			}
@@ -189,7 +170,6 @@ package
 				//currentPlayer.flameOff();
 			}
 			
-
 			
 			if (currentPlayer.isTouching(FlxObject.FLOOR))
 			{
@@ -227,9 +207,9 @@ package
 			//Finally, bump the currentPlayer up against the map
 			FlxG.collide(map, currentPlayer);
 			
-			FlxG.collide(map, enemies);
+			FlxG.collide(map, map.enemies);
 			
-			if (FlxG.overlap(enemies, currentPlayer))
+			if (FlxG.overlap(map.enemies, currentPlayer))
 			{
 				FlxG.score = 1; //sets status.text to "Aww, you died!"
 				FlxG.resetState();
@@ -238,7 +218,7 @@ package
 			
 			if (currentPlayer.flames.exists)
 			{
-				FlxG.overlap(currentPlayer.flames, enemies, FlamesHitEnemy);
+				FlxG.overlap(currentPlayer.flames, map.enemies, FlamesHitEnemy);
 			}
 			
 			//Check for currentPlayer lose conditions

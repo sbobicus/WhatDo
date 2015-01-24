@@ -15,10 +15,26 @@ package
 		public static var Level1:Class;
 				
 		[Embed(source="./assets/punk.png")]
-		
 		public static var Player2Image:Class;
 		
-		//[Embed(source="./assets/testmap.txt", mimeType="application/octet-stream")]
-		//public static var TestMap:Class;
+		[Embed(source="./assets/pickup.png")]
+		public static var Coins:Class;
+		
+		[Embed(source="./assets/item_tiles.png")]
+		public static var ItemTiles:Class;
+		
+		[Embed(source="./assets/groundwhoosh.png")]
+		public static var GroundWhoosh:Class;
+		
+		[Embed(source="./assets/robo1.png")]
+		public static var Robot1:Class;
+		
+		[Embed(source="./assets/testmap.txt", mimeType="application/octet-stream")]
+		public static var TestMap:Class;
+		
+		[Embed(source="./assets/testmap_items.txt", mimeType="application/octet-stream")]
+		public static var TestMapItems:Class;
+		
+		
 	}
 } 

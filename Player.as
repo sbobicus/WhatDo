@@ -33,7 +33,6 @@ package
 			offset.y = 16;
 			
 			flames = new Flames(0, 0, null);
-			flames.makeGraphic(32, 15, 0xffff1111);
 			flames.exists = false;
 		}
 		
@@ -43,8 +42,10 @@ package
 		public function flameOn(tiles:Map) : void
 		{
 			flames.exists = true;
+			flames.play("whoosh", true);
 			flames.timer = 0;
-			var tileX:int = x / tiles.tileWidth;
+			flames.facing = facing;
+			var tileX:int = (x + frameWidth / 2) / tiles.tileWidth;
 			for (var dy:Number = y; dy < FlxG.worldBounds.height; dy += tiles.tileHeight / 2)
 			{
 				var tileY:int = dy / tiles.tileHeight;
@@ -52,14 +53,22 @@ package
 				
 				if (tile > 0)
 				{
-					flames.y = (Math.round(dy / tiles.tileHeight) - 1) * tiles.tileHeight + tiles.tileHeight - 16;
+					flames.y = (Math.round(dy / tiles.tileHeight) - 1) * tiles.tileHeight + tiles.tileHeight - 32; 
+					var a:Number =  1.0 - Math.abs(flames.y - y) / 150.0;
+					flames.alpha = a;
+					if (a < 0.25)
+					{
+						flames.exists = false;
+						flames.y = 4096;
+					}
+					
 					flames.x = x;
 					return;
 				}
 				
 			}
 			
-			flames.y = FlxG.height + 32;
+			flames.y = 4096;
 			
 		}
 		
@@ -71,7 +80,6 @@ package
 		
 		public override function postUpdate() : void
 		{
-		
 			super.postUpdate();
 		}
 		
