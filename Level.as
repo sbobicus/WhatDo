@@ -20,7 +20,7 @@ package
 		public var time:Number = 0.0;
 		public var switchTime:Number = 1.0;
 		
-		public var multiplayer:Boolean = false;
+		public var multiplayer:Boolean = true;
 		
 		
 		public function Level()
@@ -98,7 +98,7 @@ package
 			//Create currentPlayer (a red box)
 			Player.initButtons();
 			player1 = createPlayer(0, GameAssets.Player1Image);
-			player2 = createPlayer(1, GameAssets.Player1Image);
+			player2 = createPlayer(1, GameAssets.Player2Image);
 			add(player2);
 			add(player2.flames);
 			
@@ -144,6 +144,13 @@ package
 			{
 				player2.x = player1.x;
 				player2.y = player1.y;
+				player2.velocity.x = player1.velocity.x;
+				player2.velocity.y = player1.velocity.y;
+				player2.acceleration.x = player1.acceleration.x;
+				player2.acceleration.y = player1.acceleration.y;
+				player2.facing = player1.facing;
+				player2.flames.x = player1.flames.x;
+				player2.flames.y = player1.flames.y;
 				remove(player1);
 				remove(currentPlayer.flames);
 				currentPlayer = player2;
@@ -155,6 +162,13 @@ package
 			{
 				player1.x = player2.x;
 				player1.y = player2.y;
+				player1.velocity.x = player2.velocity.x;
+				player1.velocity.y = player2.velocity.y;
+				player1.acceleration.x = player2.acceleration.x;
+				player1.acceleration.y = player2.acceleration.y;
+				player1.facing = player2.facing;
+				player1.flames.x = player2.flames.x;
+				player1.flames.y = player2.flames.y;
 				remove(player2);
 				remove(currentPlayer.flames);
 				currentPlayer = player1;
