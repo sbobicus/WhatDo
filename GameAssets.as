@@ -60,7 +60,7 @@ package
 		[Embed(source="./assets/bg.png")]
 		public static var Background:Class;
 		
-		[Embed(source="./assets/bg3.png")]
+		[Embed(source="./assets/bg2.png")]
 		public static var Background2:Class;
 		
 		
@@ -93,6 +93,9 @@ package
 		
 		[Embed(source = "assets/thrust.mp3")]
 		public static var ThrustNoise:Class;
+		
+		[Embed(source = "assets/whatdo.mp3")]
+		public static var Music:Class;
 		
 	}
 } 
