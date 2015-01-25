@@ -65,5 +65,21 @@ package
 		
 		[Embed(source="./maps/skyscraper3.png")]
 		public static var Skyscraper3:Class;
+		
+		[Embed(source = "assets/coin.mp3")]
+		public static var CoinNoise:Class;
+		
+		[Embed(source = "assets/elevator.mp3")]
+		public static var ElevatorNoise:Class;
+		
+		[Embed(source = "assets/explode.mp3")]
+		public static var ExplodeNoise:Class;
+		
+		[Embed(source = "assets/switch.mp3")]
+		public static var SwitchNoise:Class;
+		
+		[Embed(source = "assets/thrust.mp3")]
+		public static var ThrustNoise:Class;
+		
 	}
 } 

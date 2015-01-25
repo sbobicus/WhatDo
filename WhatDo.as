@@ -2,7 +2,7 @@ package
 {
 	import org.flixel.*;
 	import MenuState;
-	[SWF(width="2048", height="1080", backgroundColor="#000000")] //Set the size and color of the Flash file
+	[SWF(width="1280", height="720", backgroundColor="#000000")] //Set the size and color of the Flash file
 	
 	public class WhatDo extends FlxGame
 	{
@@ -12,7 +12,7 @@ package
 		
 		public function WhatDo()
 		{
-			super(600, 512, MenuState, 2); 
+			super(1280/2, 720/2, MenuState, 2); 
 			levelIDX = -1;
 			levels = new Array(Level,
 							   Level,

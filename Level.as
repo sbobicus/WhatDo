@@ -142,6 +142,7 @@ package
 		{
 			if (!multiplayer) return;
 			
+			FlxG.play(GameAssets.SwitchNoise);
 			if (currentPlayer == player1)
 			{
 				player2.x = player1.x;
@@ -192,6 +193,7 @@ package
 		{
 			if (shouldLose)
 			{
+				FlxG.play(GameAssets.ExplodeNoise);
 				FlxG.resetState();
 			}
 			FlxG.worldBounds = map.getBounds();
@@ -219,6 +221,7 @@ package
 			}
 			if (currentPlayer.keyJustPressed(Player.KEY_JUMP))
 			{
+				FlxG.play(GameAssets.ThrustNoise);
 				currentPlayer.velocity.y = -currentPlayer.maxVelocity.y * 0.7;
 				currentPlayer.flameOn(map);
 			}
@@ -306,15 +309,18 @@ package
 			gibEmitter.x = enemy.x + 16;
 			gibEmitter.y = enemy.y + 16;
 			gibEmitter.start(true, 2.0);
+			FlxG.play(GameAssets.ExplodeNoise);
 		}
 		
 		//Called whenever the currentPlayer touches a coin
 		public function getCoin(Coin:FlxSprite,Player:FlxSprite):void
 		{
 			Coin.kill();
+			FlxG.play(GameAssets.CoinNoise);
 			score.text = "SCORE: "+(map.coins.countDead()*100);
 			if(map.coins.countLiving() == 0)
 			{
+				FlxG.play(GameAssets.ElevatorNoise);
 				status.text = "Find the exit.";
 				map.exit.play("open");
 			}
@@ -323,6 +329,7 @@ package
 		//Called whenever the currentPlayer touches the exit
 		public function win(Exit:FlxSprite,Player:FlxSprite):void
 		{
+			FlxG.play(GameAssets.ElevatorNoise);
 			if(map.coins.countLiving() == 0)
 			{
 				status.text = "Yay, you won!";
