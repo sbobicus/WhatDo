@@ -1,5 +1,6 @@
 package 
 {
+	import org.flixel.*;
 	import org.flixel.FlxSprite;
 	
 
@@ -13,10 +14,18 @@ package
 			super(X, Y, SimpleGraphic);
 			loadGraphic(GameAssets.RoboExplode, true, false, 48, 48);
 			addAnimation("splode", [0, 1, 2, 3], 1.0 / 0.05);
+			play("splode");
 		}
 		
 		public override function postUpdate():void
 		{
+			time += FlxG.elapsed;
+			
+			if (time > liveTime)
+			{
+				kill();
+			}
+			
 			super.postUpdate();
 		}
 		

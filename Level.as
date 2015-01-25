@@ -1,6 +1,8 @@
 package 
 {	
 	import Map;
+	import org.flixel.FlxEmitter;
+	import org.flixel.FlxParticle;
 	
 	import Player;
 	
@@ -12,6 +14,7 @@ package
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
+	import org.flixel.FlxPoint;
 	
 	public class Level extends FlxState 
 	{
@@ -30,6 +33,9 @@ package
 		
 		public var backgroundSprite:FlxSprite;
 		public var shouldLose:Boolean = false;
+		
+		public var gibEmitter:FlxEmitter;
+		
 		public function Level()
 		{
 			super();
@@ -95,6 +101,29 @@ package
 			}
 			add(status);
 			add(map.enemies);
+			
+			gibEmitter = new FlxEmitter(0, 0, 20);
+			
+			for(var i:int = 0; i < 20; i++)
+			{
+				var particle:FlxParticle = new FlxParticle();
+				particle.loadGraphic(GameAssets.Gibs, false, false, 16, 16);
+				particle.randomFrame();
+				particle.exists = false;
+				particle.friction = 100;
+				particle.lifespan = 0.5;
+				gibEmitter.add(particle);
+			}
+			
+			gibEmitter.lifespan = 0.15;
+			
+			gibEmitter.particleDrag = new FlxPoint(0, 0);
+			gibEmitter.minParticleSpeed = new FlxPoint( -100, -200);
+			gibEmitter.maxParticleSpeed = new FlxPoint(100, 200);
+			gibEmitter.gravity = 500;
+			gibEmitter.bounce = 0.5;
+			
+			add(gibEmitter);
 		}
 		
 		public function createPlayer(index:int, graphic:Class) : Player
@@ -233,6 +262,7 @@ package
 			//Finally, bump the currentPlayer up against the map
 			FlxG.collide(map, currentPlayer);
 			FlxG.collide(map, currentPlayer.flameEmitter);
+			FlxG.collide(map, gibEmitter);
 			
 			FlxG.collide(map, map.enemies);
 			
@@ -266,6 +296,10 @@ package
 		private function FlamesHitEnemy(flames:FlxSprite, enemy:FlxSprite):void
 		{
 			enemy.exists = false;
+			add(new Explosion(enemy.x - 8, enemy.y - 8, null));
+			gibEmitter.x = enemy.x + 16;
+			gibEmitter.y = enemy.y + 16;
+			gibEmitter.start(true, 2.0);
 		}
 		
 		//Called whenever the currentPlayer touches a coin
