@@ -113,7 +113,9 @@ package
 			
 			score = new FlxText(2,2,80);
 			score.shadow = 0xff000000;
-			score.text = "SCORE: "+(map.coins.countDead()*100);
+			score.scrollFactor.x = 0;
+			score.scrollFactor.y = 0;
+			score.text = "Gems Left: "+(map.coins.countLiving());
 			add(score);
 			
 			status = new FlxText(FlxG.width-160-2,2,160);
@@ -222,7 +224,7 @@ package
 			FlxG.worldBounds = map.getBounds();
 			FlxG.camera.follow(currentPlayer, FlxCamera.STYLE_PLATFORMER);
 			time += FlxG.elapsed;
-			score.text = "" + currentPlayer.flames.y;
+
 			if (time > switchTime)
 			{
 				switchPlayers();
@@ -340,7 +342,7 @@ package
 		{
 			Coin.kill();
 			FlxG.play(GameAssets.CoinNoise);
-			score.text = "SCORE: "+(map.coins.countDead()*100);
+			score.text = "Gems Left: "+(map.coins.countLiving());
 			if(map.coins.countLiving() == 0)
 			{
 				FlxG.play(GameAssets.ElevatorNoise);
@@ -356,7 +358,7 @@ package
 			{
 				FlxG.play(GameAssets.ElevatorNoise);
 				status.text = "Yay, you won!";
-				score.text = "SCORE: 5000";
+
 				Player.kill();
 				WhatDo.nextLevel();
 			}
