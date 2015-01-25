@@ -45,7 +45,8 @@ package
 			shouldLose = false;
 			
 			//Create a new tilemap using our map data
-			map = new Map(new LevelData(GameAssets.Skyscraper1, LevelData.TYPE_BITMAP), new LevelData(GameAssets.EmptyMapItems, LevelData.TYPE_CSV));
+			//map = new Map(new LevelData(GameAssets.Skyscraper1, LevelData.TYPE_BITMAP), new LevelData(GameAssets.EmptyMapItems, LevelData.TYPE_CSV));
+			map = new Map(new LevelData(GameAssets.TestMap, LevelData.TYPE_CSV), new LevelData(GameAssets.TestMapItems, LevelData.TYPE_CSV));
 			FlxG.camera.follow(currentPlayer, FlxCamera.STYLE_LOCKON);
 			map.loadLevel();
 			//var x:uint = map.getBounds().left;
@@ -53,7 +54,8 @@ package
 			//var a:uint = map.getBounds().right;
 			//var b:uint = map.getBounds().bottom;
 			//FlxG.camera.setBounds(x,y,a,b,true);
-			map.spawn = new FlxObject(map.getBounds().width - 128, map.getBounds().height - 96);
+			if (map.spawn == null)
+				map.spawn = new FlxObject(map.getBounds().width - 128, map.getBounds().height - 96);
 			backgroundSprite.makeGraphic(map.getBounds().width, map.getBounds().height, 0xff33CCFF);
 			add(backgroundSprite);
 			add(map);
@@ -229,7 +231,7 @@ package
 			FlxG.overlap(map.coins, currentPlayer, getCoin);
 			
 			//Check to see if the currentPlayer touched the exit door this frame
-			//FlxG.overlap(map.exit, currentPlayer, win);
+			FlxG.overlap(map.exit, currentPlayer, win);
 			
 			//Finally, bump the currentPlayer up against the map
 			FlxG.collide(map, currentPlayer);
