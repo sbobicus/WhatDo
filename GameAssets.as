@@ -33,6 +33,8 @@ package
 		[Embed(source="./assets/flameparticles.png")]
 		public static var FlameParticles:Class;
 		
+		[Embed(source="./assets/robosplode.png")]
+		public static var RoboExplode:Class;
 		
 		[Embed(source="./assets/robo1.png")]
 		public static var Robot1:Class;
