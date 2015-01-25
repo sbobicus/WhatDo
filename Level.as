@@ -45,15 +45,14 @@ package
 			shouldLose = false;
 			
 			//Create a new tilemap using our map data
-			map = new Map(new LevelData(GameAssets.Skyscraper1, LevelData.TYPE_BITMAP), new LevelData(GameAssets.EmptyMapItems, LevelData.TYPE_CSV));
-			FlxG.camera.follow(currentPlayer, FlxCamera.STYLE_LOCKON);
+			map = new Map(new LevelData(GameAssets.Skyscraper2, LevelData.TYPE_BITMAP), new LevelData(GameAssets.EmptyMapItems, LevelData.TYPE_CSV));
 			map.loadLevel();
-			//var x:uint = map.getBounds().left;
-			//var y:uint = map.getBounds().top;
-			//var a:uint = map.getBounds().right;
-			//var b:uint = map.getBounds().bottom;
-			//FlxG.camera.setBounds(x,y,a,b,true);
-			map.spawn = new FlxObject(map.getBounds().width - 128, map.getBounds().height - 96);
+			var x:uint = map.getBounds().left;
+			var y:uint = map.getBounds().top;
+			var a:uint = map.getBounds().right;
+			var b:uint = map.getBounds().bottom;
+			FlxG.camera.setBounds(x,y,a,b,true);
+			map.spawn = new FlxObject(map.getBounds().width - 192, map.getBounds().height - 96);
 			backgroundSprite.makeGraphic(map.getBounds().width, map.getBounds().height, 0xff33CCFF);
 			add(backgroundSprite);
 			add(map);
@@ -162,11 +161,6 @@ package
 			}
 			FlxG.worldBounds = map.getBounds();
 			FlxG.camera.follow(currentPlayer, FlxCamera.STYLE_PLATFORMER);
-			var x:uint = map.getBounds().left;
-			var y:uint = map.getBounds().top;
-			var a:uint = map.getBounds().width;
-			var b:uint = map.getBounds().height;
-			FlxG.camera.setBounds(x,y,a,b,true);
 			time += FlxG.elapsed;
 			score.text = "" + currentPlayer.flames.y;
 			if (time > switchTime)
@@ -190,7 +184,7 @@ package
 			}
 			if (currentPlayer.keyJustPressed(Player.KEY_JUMP))
 			{
-				currentPlayer.velocity.y = -currentPlayer.maxVelocity.y / 2;
+				currentPlayer.velocity.y = -currentPlayer.maxVelocity.y;
 				currentPlayer.flameOn(map);
 			}
 			else 
