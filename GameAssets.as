@@ -29,6 +29,13 @@ package
 		
 		[Embed(source="./maps/level3_objects.txt", mimeType="application/octet-stream")]
 		public static var Level3Objects:Class;
+		
+		[Embed(source="./maps/level4_tiles.txt", mimeType="application/octet-stream")]
+		public static var Level4Tiles:Class;
+		
+		[Embed(source="./maps/level4_objects.txt", mimeType="application/octet-stream")]
+		public static var Level4Objects:Class;
+				
 				
 		[Embed(source="./assets/punk.png")]
 		public static var Player2Image:Class;

@@ -19,12 +19,15 @@ package
 							   Level1,
 							   Level2,
 							   Level3,
-							   Level);
+							   Level,
+							   Level4);
 							   
-			texts = new Array("We got fused together...\nWhat do we do now?",
+			texts = new Array(
+								"We got fused together...\nWhat do we do now?",
 							  "We take the friendly man's advice, and move on...",
 							  "We need more gems. It is the only way.",
-							  "Come on Edgar you lovable scamp.\n Let us out of your hellhole dimension!\n We miss our families..");
+							  "Come on Edgar you lovable scamp.\n Let us out of your hellhole dimension!\n We miss our families..",
+							  "We seek answers on top of the mountain.");
 							   
 		}
 		

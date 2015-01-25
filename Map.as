@@ -38,7 +38,7 @@ package
 		//creates a new coin located on the specified tile
 		public function createCoin(X:uint,Y:uint):void
 		{
-			var coin:Coin = new Coin(X * _tileWidth + 3, Y * _tileHeight + 2, null);
+			var coin:Coin = new Coin(X * _tileWidth, Y * _tileHeight, null);
 			coin.loadGraphic(GameAssets.Coins, true);
 			coin.addAnimation("red", [0, 1], 1);
 			coin.addAnimation("blue", [1]);
