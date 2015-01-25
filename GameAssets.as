@@ -12,8 +12,17 @@ package
 		[Embed(source="./assets/suit.png")]
 		public static var Player1Image:Class;
 		
-		[Embed(source="./maps/skyline.png")]
-		public static var Level1:Class;
+		[Embed(source="./maps/level1_tiles.txt", mimeType="application/octet-stream")]
+		public static var Level1Tiles:Class;
+		
+		[Embed(source="./maps/level1_objects.txt", mimeType="application/octet-stream")]
+		public static var Level1Objects:Class;
+		
+		[Embed(source="./maps/level2_tiles.txt", mimeType="application/octet-stream")]
+		public static var Level2Tiles:Class;
+		
+		[Embed(source="./maps/level2_objects.txt", mimeType="application/octet-stream")]
+		public static var Level2Objects:Class;
 				
 		[Embed(source="./assets/punk.png")]
 		public static var Player2Image:Class;
