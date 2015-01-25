@@ -12,7 +12,7 @@ package
 		
 		public function WhatDo()
 		{
-			super(1280, 680, MenuState, 2); 
+			super(880, 680, MenuState, 2); 
 			levelIDX = -1;
 			levels = new Array(Level,
 							   Level,

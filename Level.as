@@ -45,7 +45,7 @@ package
 
 			
 			//Create a new tilemap using our map data
-			map = new Map(new LevelData(GameAssets.TestMap, LevelData.TYPE_CSV), new LevelData(GameAssets.TestMapItems, LevelData.TYPE_CSV));
+			map = new Map(new LevelData(GameAssets.Skyscraper1, LevelData.TYPE_BITMAP), new LevelData(GameAssets.TestMapItems, LevelData.TYPE_CSV));
 			map.loadLevel();
 			map.spawn = new FlxObject(128, map.getBounds().height / 2);
 			backgroundSprite.makeGraphic(map.getBounds().width, map.getBounds().height, 0xff33CCFF);
