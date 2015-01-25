@@ -16,7 +16,7 @@ package
 			super(1280/2, 720/2, MenuState, 2); 
 			levelIDX = -1;
 			levels = new Array(
-								WilsoLevel,
+								Skyscraper1,
 							   Level5,
 							   Level1,
 							   Level2,
