@@ -32,6 +32,7 @@ package
 		public var multiplayer:Boolean = true;
 		
 		public var backgroundSprite:FlxSprite;
+		public var backgroundSprite2:FlxSprite;
 		public var shouldLose:Boolean = false;
 		
 		public var gibEmitter:FlxEmitter;
@@ -48,6 +49,15 @@ package
 			FlxG.bgColor = 0xFF666666;
 			
 			backgroundSprite = new FlxSprite(0, 0);
+			backgroundSprite2 = new FlxSprite(0, 0);
+			backgroundSprite.loadGraphic(GameAssets.Background);
+			backgroundSprite.solid = false;
+			backgroundSprite.scrollFactor.x = 0.5;
+			
+			backgroundSprite2.loadGraphic(GameAssets.Background2);
+			backgroundSprite2.solid = false;
+			backgroundSprite2.scrollFactor.x = 0.7;
+			backgroundSprite2.y = 128;
 			shouldLose = false;
 			
 			//Create a new tilemap using our map data
@@ -66,8 +76,9 @@ package
 		
 			if (map.spawn == null)
 				map.spawn = new FlxObject(map.getBounds().width - 192, map.getBounds().height - 96);
-			backgroundSprite.makeGraphic(map.getBounds().width, map.getBounds().height, 0xff33CCFF);
+
 			add(backgroundSprite);
+			add(backgroundSprite2);
 			add(map);
 			add(map.exit);
 			add(map.spawn);
@@ -254,7 +265,6 @@ package
 				}
 			}
 		
-			
 			//Updates all the objects appropriately
 			super.update();
 
@@ -298,6 +308,7 @@ package
 				shouldLose = true;
 				
 			}
+			
 			
 
 		}

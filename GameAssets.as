@@ -48,6 +48,13 @@ package
 		[Embed(source="./assets/elevator.png")]
 		public static var Elevator:Class;
 		
+		[Embed(source="./assets/bg2.png")]
+		public static var Background:Class;
+		
+		[Embed(source="./assets/bg3.png")]
+		public static var Background2:Class;
+		
+		
 		[Embed(source="./maps/testmap.txt", mimeType="application/octet-stream")]
 		public static var TestMap:Class;
 		
