@@ -23,7 +23,31 @@ package
 		
 		[Embed(source="./maps/level2_objects.txt", mimeType="application/octet-stream")]
 		public static var Level2Objects:Class;
-				
+		
+	    [Embed(source="./maps/level3_tiles.txt", mimeType="application/octet-stream")]
+		public static var Level3Tiles:Class;
+		
+		[Embed(source="./maps/level3_objects.txt", mimeType="application/octet-stream")]
+		public static var Level3Objects:Class;
+		
+		[Embed(source="./maps/level4_tiles.txt", mimeType="application/octet-stream")]
+		public static var Level4Tiles:Class;
+		
+		[Embed(source="./maps/level4_objects.txt", mimeType="application/octet-stream")]
+		public static var Level4Objects:Class;
+		
+		[Embed(source="./maps/level5_tiles.txt", mimeType="application/octet-stream")]
+		public static var Level5Tiles:Class;
+		
+		[Embed(source="./maps/level5_objects.txt", mimeType="application/octet-stream")]
+		public static var Level5Objects:Class;
+		
+		[Embed(source="./maps/wilso_tiles.txt", mimeType="application/octet-stream")]
+		public static var WilsoTiles:Class;
+		
+		[Embed(source="./maps/wilso_objects.txt", mimeType="application/octet-stream")]
+		public static var WilsoObjects:Class;
+							
 		[Embed(source="./assets/punk.png")]
 		public static var Player2Image:Class;
 		
