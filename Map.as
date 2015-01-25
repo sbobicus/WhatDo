@@ -66,7 +66,7 @@ package
 		
 		public function createSpawn(X:uint, Y:uint):void
 		{
-			spawn = new FlxObject(X * _tileWidth, Y * _tileHeight);
+			spawn = new FlxObject(X * _tileWidth, Y * _tileHeight - 32);
 		}
 		
 		public function createExit(X:uint, Y:uint):void
