@@ -18,6 +18,7 @@ package
 		public var tileWidth:int;
 		public var tileHeight:int;
 		public var enemies:FlxGroup;
+		public var hazards:FlxGroup;
 		public var objectFunctions:Array;
 		
 		public function Map(tiles:LevelData, objects:LevelData) : void
@@ -26,7 +27,7 @@ package
 			tileData = tiles;
 			objectData = objects;
 			
-			objectFunctions = new Array(nothing, nothing, createCoin, createCrawler, createSpawn, createExit);
+			objectFunctions = new Array(nothing, nothing, createCoin, createCrawler, createSpawn, createExit, createSpike);
 		}
 		
 		public function nothing(x:uint, y:uint) : void
@@ -45,10 +46,16 @@ package
 			coins.add(coin);
 		}
 		
+		public function createSpike(X:uint, Y:uint):void
+		{
+			var spike:FlxObject = new FlxObject(X * _tileWidth - 1, Y * _tileHeight - 1, 18 , 18);
+			hazards.add(spike);
+		}
+		
 				
 		public function createCrawler(X:uint, Y:uint):void
 		{
-			enemies.add(new Crawler(X * _tileWidth, Y * _tileHeight));
+			enemies.add(new Crawler(X * _tileWidth, Y * _tileHeight - 32));
 		}
 		
 		public function createSpawn(X:uint, Y:uint):void
@@ -103,6 +110,7 @@ package
 		{
 			coins = new FlxGroup();
 			enemies = new FlxGroup();
+			hazards = new FlxGroup();
 
 			var objectMap:FlxTilemap = new FlxTilemap();
 		    

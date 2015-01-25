@@ -61,6 +61,7 @@ package
 			add(map.spawn);
 			add(map.coins);
 			add(map.enemies);
+			add(map.hazards);
 
 			//Create currentPlayer (a red box)
 			Player.initButtons();
@@ -159,6 +160,13 @@ package
 			{
 				FlxG.resetState();
 			}
+			FlxG.worldBounds = map.getBounds();
+			FlxG.camera.follow(currentPlayer, FlxCamera.STYLE_PLATFORMER);
+			var x:uint = map.getBounds().left;
+			var y:uint = map.getBounds().top;
+			var a:uint = map.getBounds().width;
+			var b:uint = map.getBounds().height;
+			FlxG.camera.setBounds(x,y,a,b,true);
 			time += FlxG.elapsed;
 			score.text = "" + currentPlayer.flames.y;
 			if (time > switchTime)
@@ -230,7 +238,7 @@ package
 			
 			FlxG.collide(map, map.enemies);
 			
-			if (FlxG.overlap(map.enemies, currentPlayer))
+			if (FlxG.overlap(map.enemies, currentPlayer) || FlxG.overlap(currentPlayer, map.hazards))
 			{
 				FlxG.score = 1;
 				FlxG.shake(0.05);
@@ -244,7 +252,8 @@ package
 				FlxG.overlap(currentPlayer.flames, map.enemies, FlamesHitEnemy);
 			}
 			
-			if(!FlxG.worldBounds.overlaps(new FlxRect(currentPlayer.x, currentPlayer.y, 1, 1)))
+			//Check for currentPlayer lose conditions
+			if(!map.getBounds().overlaps(new FlxRect(currentPlayer.x, currentPlayer.y, 1, 1)))
 			{
 				FlxG.score = 1; 
 				FlxG.shake(0.05);
