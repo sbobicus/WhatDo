@@ -48,7 +48,7 @@ package
 		
 		public function createSpike(X:uint, Y:uint):void
 		{
-			var spike:FlxObject = new FlxObject(X * _tileWidth - 1, Y * _tileHeight - 1, 18 , 18);
+			var spike:FlxObject = new FlxObject(X * _tileWidth + 4, Y * _tileHeight + 4, 8 , 8);
 			hazards.add(spike);
 		}
 		
@@ -97,6 +97,15 @@ package
 			{
 				loadCSV(tileData, this);
 			}
+			
+			
+			var spikes:Array = new Array(96, 97, 98, 104, 105, 106, 112, 113, 114, 120, 121, 122);
+			
+			for each (var t:uint in spikes)
+			{
+				setTileProperties(t + 1, FlxObject.NONE);
+			}
+			
 		}
 		
 		public function loadBitmap(data:LevelData, map:FlxTilemap):void

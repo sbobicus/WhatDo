@@ -234,7 +234,7 @@ package
 			//Player movement and controls
 			currentPlayer.acceleration.x = 0;
 		
-			if (currentPlayer.isKeyPressed(Player.KEY_LEFT))
+			if (currentPlayer.isKeyPressed(Player.KEY_LEFT)) 
 			{
 				currentPlayer.facing = FlxObject.LEFT;
 				currentPlayer.acceleration.x = -currentPlayer.maxVelocity.x * 4;
