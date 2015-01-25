@@ -16,8 +16,7 @@ package
 			levelIDX = -1;
 			levels = new Array(Skyscraper1,
 							   Skyscraper2,
-							   Skyscraper3,
-							   Level);
+							   Skyscraper3)
 		}
 		
 		public static function goToFirstLevel():void

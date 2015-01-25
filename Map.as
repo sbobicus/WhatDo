@@ -1,10 +1,10 @@
 package
 {
+	import flash.filters.DisplacementMapFilterMode;
 	import flash.utils.ByteArray;
 	
-	import flash.filters.DisplacementMapFilterMode;
-	import org.flixel.*;
 	import org.flixel.FlxGroup;
+	import org.flixel.FlxObject;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxTilemap;
 
@@ -66,7 +66,7 @@ package
 		
 		public function createSpawn(X:uint, Y:uint):void
 		{
-			spawn = new FlxObject(X * _tileWidth, Y * _tileHeight - 32);
+			spawn = new FlxObject(X * _tileWidth, Y * _tileHeight - 16);
 		}
 		
 		public function createExit(X:uint, Y:uint):void
@@ -109,6 +109,7 @@ package
 			var myByteArray:ByteArray = new data.asset;
 			var myString:String = myByteArray.readUTFBytes(myByteArray.length);
 			map.loadMap(myString, GameAssets.TileMap, 16, 16, FlxTilemap.OFF, 1);
+			map.setTileProperties(1, FlxObject.NONE);
 		}
 		
 		public function loadObjects():void
@@ -134,7 +135,9 @@ package
 				{
 					var tile:uint = objectMap.getTile(x, y);
 					
-					tile = tile - 129;
+					if (tile > 129){
+						tile = tile - 129;	
+					}
 					
 					if (tile < objectFunctions.length)
 					{

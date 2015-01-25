@@ -113,12 +113,16 @@ package
 			flames.timer = 0;
 			flames.facing = facing;
 			var tileX:int = (x + frameWidth / 2) / tiles.tileWidth;
+			if(tileX < tiles.widthInTiles && tileX > 0)
 			for (var dy:Number = y; dy < FlxG.worldBounds.height; dy += tiles.tileHeight / 2)
 			{
 				var tileY:int = dy / tiles.tileHeight;
+				
+				if(tileY >= tiles.heightInTiles) break;
+				
 				var tile:uint = tiles.getTile(tileX, tileY);
 				
-				if (tile > 0)
+				if (tile > 1)
 				{
 					flames.y = (Math.round(dy / tiles.tileHeight) - 1) * tiles.tileHeight + tiles.tileHeight - 32; 
 					var a:Number =  1.0 - Math.abs(flames.y - y) / 150.0;

@@ -57,10 +57,10 @@ package
 		[Embed(source="./assets/elevator.png")]
 		public static var Elevator:Class;
 		
-		[Embed(source="./assets/bg2.png")]
+		[Embed(source="./assets/bg.png")]
 		public static var Background:Class;
 		
-		[Embed(source="./assets/bg3.png")]
+		[Embed(source="./assets/bg2.png")]
 		public static var Background2:Class;
 		
 		
@@ -76,19 +76,19 @@ package
 		[Embed(source="./maps/skyscraper1.txt", mimeType="application/octet-stream")]
 		public static var Skyscraper1Tiles:Class;
 		
-		[Embed(source="./maps/skyscraper1_objects.txt", mimeType="application/octet-stream")]
+		[Embed(source="./maps/skyscraper1items.txt", mimeType="application/octet-stream")]
 		public static var Skyscraper1Objects:Class;
 		
 		[Embed(source="./maps/skyscraper2.txt", mimeType="application/octet-stream")]
 		public static var Skyscraper2Tiles:Class;
 		
-		[Embed(source="./maps/skyscraper2_objects.txt", mimeType="application/octet-stream")]
+		[Embed(source="./maps/skyscraper2items.txt", mimeType="application/octet-stream")]
 		public static var Skyscraper2Objects:Class;
 		
 		[Embed(source="./maps/skyscraper3.txt", mimeType="application/octet-stream")]
 		public static var Skyscraper3Tiles:Class;
 		
-		[Embed(source="./maps/skyscraper3_objects.txt", mimeType="application/octet-stream")]
+		[Embed(source="./maps/skyscraper3items.txt", mimeType="application/octet-stream")]
 		public static var Skyscraper3Objects:Class;
 		
 		[Embed(source = "assets/coin.mp3")]
@@ -105,6 +105,9 @@ package
 		
 		[Embed(source = "assets/thrust.mp3")]
 		public static var ThrustNoise:Class;
+		
+		[Embed(source = "assets/whatdo.mp3")]
+		public static var Music:Class;
 		
 	}
 } 
