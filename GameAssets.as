@@ -42,6 +42,9 @@ package
 		[Embed(source="./assets/robo1.png")]
 		public static var Robot1:Class;
 		
+		[Embed(source="./assets/flybot.png")]
+		public static var Flyer:Class;
+		
 		[Embed(source="./assets/elevator.png")]
 		public static var Elevator:Class;
 		

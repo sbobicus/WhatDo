@@ -27,7 +27,7 @@ package
 			tileData = tiles;
 			objectData = objects;
 			
-			objectFunctions = new Array(nothing, nothing, createCoin, createCrawler, createSpawn, createExit, createSpike);
+			objectFunctions = new Array(nothing, nothing, createCoin, createCrawler, createSpawn, createExit, createSpike, createFlyer);
 		}
 		
 		public function nothing(x:uint, y:uint) : void
@@ -50,6 +50,12 @@ package
 		{
 			var spike:FlxObject = new FlxObject(X * _tileWidth - 1, Y * _tileHeight - 1, 18 , 18);
 			hazards.add(spike);
+		}
+		
+		
+		public function createFlyer(X:uint, Y:uint):void
+		{
+			enemies.add(new Flyer(X * _tileWidth, Y * _tileHeight - 32));
 		}
 		
 				

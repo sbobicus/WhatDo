@@ -27,7 +27,7 @@ package
 		public var status:FlxText;
 		
 		public var time:Number = 0.0;
-		public var switchTime:Number = 1000.0;
+		public var switchTime:Number = 1.0;
 		
 		public var multiplayer:Boolean = true;
 		
@@ -53,9 +53,9 @@ package
 			//Create a new tilemap using our map data
 			//map = new Map(new LevelData(GameAssets.TestMap, LevelData.TYPE_CSV), new LevelData(GameAssets.EmptyMapItems, LevelData.TYPE_CSV));
 			//Create a new tilemap using our map data
-			map = new Map(new LevelData(GameAssets.Skyscraper2, LevelData.TYPE_BITMAP), new LevelData(GameAssets.EmptyMapItems, LevelData.TYPE_CSV));
+			//map = new Map(new LevelData(GameAssets.Skyscraper2, LevelData.TYPE_BITMAP), new LevelData(GameAssets.EmptyMapItems, LevelData.TYPE_CSV));
 			//map = new Map(new LevelData(GameAssets.Skyscraper1, LevelData.TYPE_BITMAP), new LevelData(GameAssets.EmptyMapItems, LevelData.TYPE_CSV));
-			//map = new Map(new LevelData(GameAssets.TestMap, LevelData.TYPE_CSV), new LevelData(GameAssets.TestMapItems, LevelData.TYPE_CSV));
+			map = new Map(new LevelData(GameAssets.TestMap, LevelData.TYPE_CSV), new LevelData(GameAssets.TestMapItems, LevelData.TYPE_CSV));
 			FlxG.camera.follow(currentPlayer, FlxCamera.STYLE_LOCKON);
 			map.loadLevel();
 			var x:uint = map.getBounds().left;
@@ -283,6 +283,7 @@ package
 			if (currentPlayer.flames.exists)
 			{
 				FlxG.overlap(currentPlayer.flames, map.enemies, FlamesHitEnemy);
+				FlxG.overlap(currentPlayer.jet, map.enemies, FlamesHitEnemy);
 			}
 			
 			//Check for currentPlayer lose conditions
