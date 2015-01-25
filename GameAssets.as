@@ -79,6 +79,18 @@ package
 		[Embed(source="./maps/skyscraper1_objects.txt", mimeType="application/octet-stream")]
 		public static var Skyscraper1Objects:Class;
 		
+		[Embed(source="./maps/skyscraper2.txt", mimeType="application/octet-stream")]
+		public static var Skyscraper2Tiles:Class;
+		
+		[Embed(source="./maps/skyscraper2_objects.txt", mimeType="application/octet-stream")]
+		public static var Skyscraper2Objects:Class;
+		
+		[Embed(source="./maps/skyscraper3.txt", mimeType="application/octet-stream")]
+		public static var Skyscraper3Tiles:Class;
+		
+		[Embed(source="./maps/skyscraper3_objects.txt", mimeType="application/octet-stream")]
+		public static var Skyscraper3Objects:Class;
+		
 		[Embed(source = "assets/coin.mp3")]
 		public static var CoinNoise:Class;
 		
