@@ -351,9 +351,9 @@ package
 		//Called whenever the currentPlayer touches the exit
 		public function win(Exit:FlxSprite,Player:FlxSprite):void
 		{
-			FlxG.play(GameAssets.ElevatorNoise);
 			if(map.coins.countLiving() == 0)
 			{
+				FlxG.play(GameAssets.ElevatorNoise);
 				status.text = "Yay, you won!";
 				score.text = "SCORE: 5000";
 				Player.kill();

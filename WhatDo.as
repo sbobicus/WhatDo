@@ -14,7 +14,8 @@ package
 		{
 			super(1280/2, 720/2, MenuState, 2); 
 			levelIDX = -1;
-			levels = new Array(Level1,
+			levels = new Array(Skyscraper1,
+							   Level1,
 							   Level2,
 							   Level);
 		}
