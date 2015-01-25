@@ -16,6 +16,7 @@ package
 			super(1280/2, 720/2, MenuState, 2); 
 			levelIDX = -1;
 			levels = new Array(
+							   Level5,
 							   Level1,
 							   Level2,
 							   Level3,
@@ -27,7 +28,8 @@ package
 							  "We take the friendly man's advice, and move on...",
 							  "We need more gems. It is the only way.",
 							  "Come on Edgar you lovable scamp.\n Let us out of your hellhole dimension!\n We miss our families..",
-							  "We seek answers on top of the mountain.");
+							  "We seek answers on top of the mountain.",
+							  "Only one way to go: the tunnel.");
 							   
 		}
 		
