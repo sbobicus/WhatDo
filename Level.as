@@ -85,6 +85,7 @@ package
 			var a:uint = map.getBounds().right;
 			var b:uint = map.getBounds().bottom;
 			FlxG.camera.setBounds(x,y,a,b,true);
+			FlxG.worldBounds = map.getBounds();
 		
 			if (map.spawn == null)
 				map.spawn = new FlxObject(map.getBounds().width - 192, map.getBounds().height - 96);
