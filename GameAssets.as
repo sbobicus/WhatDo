@@ -74,10 +74,10 @@ package
 		public static var EmptyMapItems:Class;
 		
 		[Embed(source="./maps/skyscraper1.txt", mimeType="application/octet-stream")]
-		public static var Skyscraper1:Class;
+		public static var Skyscraper1Tiles:Class;
 		
-		[Embed(source="./maps/skyscraper1items.txt", mimeType="application/octet-stream")]
-		public static var Skyscraper1Items:Class;
+		[Embed(source="./maps/skyscraper1_objects.txt", mimeType="application/octet-stream")]
+		public static var Skyscraper1Objects:Class;
 		
 		[Embed(source = "assets/coin.mp3")]
 		public static var CoinNoise:Class;

@@ -109,7 +109,6 @@ package
 			var myByteArray:ByteArray = new data.asset;
 			var myString:String = myByteArray.readUTFBytes(myByteArray.length);
 			map.loadMap(myString, GameAssets.TileMap, 16, 16, FlxTilemap.OFF, 1);
-	
 		}
 		
 		public function loadObjects():void
@@ -134,6 +133,8 @@ package
 				for (var y:int = 0; y < this.heightInTiles; y++)
 				{
 					var tile:uint = objectMap.getTile(x, y);
+					
+					tile = tile - 129;
 					
 					if (tile < objectFunctions.length)
 					{
