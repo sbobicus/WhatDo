@@ -24,7 +24,7 @@ package
 		public var status:FlxText;
 		
 		public var time:Number = 0.0;
-		public var switchTime:Number = 1.0;
+		public var switchTime:Number = 1000.0;
 		
 		public var multiplayer:Boolean = true;
 		
@@ -45,10 +45,15 @@ package
 			shouldLose = false;
 			
 			//Create a new tilemap using our map data
-			//map = new Map(new LevelData(GameAssets.Skyscraper1, LevelData.TYPE_BITMAP), new LevelData(GameAssets.TestMapItems, LevelData.TYPE_CSV));
-			map = new Map(new LevelData(GameAssets.TestMap, LevelData.TYPE_CSV), new LevelData(GameAssets.TestMapItems, LevelData.TYPE_CSV));
+			map = new Map(new LevelData(GameAssets.Skyscraper1, LevelData.TYPE_BITMAP), new LevelData(GameAssets.EmptyMapItems, LevelData.TYPE_CSV));
+			FlxG.camera.follow(currentPlayer, FlxCamera.STYLE_LOCKON);
 			map.loadLevel();
-			map.spawn = new FlxObject(128, map.getBounds().height / 2);
+			//var x:uint = map.getBounds().left;
+			//var y:uint = map.getBounds().top;
+			//var a:uint = map.getBounds().right;
+			//var b:uint = map.getBounds().bottom;
+			//FlxG.camera.setBounds(x,y,a,b,true);
+			map.spawn = new FlxObject(map.getBounds().width - 128, map.getBounds().height - 96);
 			backgroundSprite.makeGraphic(map.getBounds().width, map.getBounds().height, 0xff33CCFF);
 			add(backgroundSprite);
 			add(map);
@@ -69,6 +74,7 @@ package
 			add(player2.flameEmitter);		
 			currentPlayer = player2;
 			switchPlayers();
+			FlxG.camera.follow(currentPlayer, FlxCamera.STYLE_LOCKON);
 			
 			score = new FlxText(2,2,80);
 			score.shadow = 0xff000000;
@@ -142,7 +148,7 @@ package
 				add(currentPlayer.flames);
 			}
 			
-			//FlxG.shake(0.001, 0.25);
+			FlxG.shake(0.001, 0.25);
 			//FlxG.flash(0x55ffffff, 0.2);
 		}
 		
@@ -155,11 +161,11 @@ package
 			}
 			FlxG.worldBounds = map.getBounds();
 			FlxG.camera.follow(currentPlayer, FlxCamera.STYLE_PLATFORMER);
-			//var x:uint = map.getBounds().left;
-			//var y:uint = map.getBounds().top;
-			//var a:uint = map.getBounds().width;
-			//var b:uint = map.getBounds().height;
-			//FlxG.camera.setBounds(x,y,a,b,true);
+			var x:uint = map.getBounds().left;
+			var y:uint = map.getBounds().top;
+			var a:uint = map.getBounds().width;
+			var b:uint = map.getBounds().height;
+			FlxG.camera.setBounds(x,y,a,b,true);
 			time += FlxG.elapsed;
 			score.text = "" + currentPlayer.flames.y;
 			if (time > switchTime)
@@ -223,7 +229,7 @@ package
 			FlxG.overlap(map.coins, currentPlayer, getCoin);
 			
 			//Check to see if the currentPlayer touched the exit door this frame
-			FlxG.overlap(map.exit, currentPlayer, win);
+			//FlxG.overlap(map.exit, currentPlayer, win);
 			
 			//Finally, bump the currentPlayer up against the map
 			FlxG.collide(map, currentPlayer);

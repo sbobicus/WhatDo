@@ -46,6 +46,9 @@ package
 		[Embed(source="./maps/testmap_items.txt", mimeType="application/octet-stream")]
 		public static var TestMapItems:Class;
 		
+		[Embed(source="./maps/emptymap_items.txt", mimeType="application/octet-stream")]
+		public static var EmptyMapItems:Class;
+		
 		[Embed(source="./maps/skyscraper1.png")]
 		public static var Skyscraper1:Class;
 		
