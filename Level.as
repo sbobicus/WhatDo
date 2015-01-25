@@ -26,7 +26,7 @@ package
 		public var time:Number = 0.0;
 		public var switchTime:Number = 1.0;
 		
-		public var multiplayer:Boolean = false;
+		public var multiplayer:Boolean = true;
 		
 		public var backgroundSprite:FlxSprite;
 		public var shouldLose:Boolean = false;
@@ -65,9 +65,8 @@ package
 			add(player2.jet);
 			add(player2);
 			add(player2.flames);
-			Player.createParticles();
-			add(Player.flameEmitter);
-						
+			add(player1.flameEmitter);
+			add(player2.flameEmitter);		
 			currentPlayer = player2;
 			switchPlayers();
 			
@@ -228,7 +227,7 @@ package
 			
 			//Finally, bump the currentPlayer up against the map
 			FlxG.collide(map, currentPlayer);
-			FlxG.collide(map, Player.flameEmitter);
+			FlxG.collide(map, currentPlayer.flameEmitter);
 			
 			FlxG.collide(map, map.enemies);
 			

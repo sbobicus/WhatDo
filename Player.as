@@ -7,7 +7,7 @@ package
 	{
 		public var index:int;
 		public var flames:Flames;
-		public static var flameEmitter:FlxEmitter;
+		public var flameEmitter:FlxEmitter;
 		public var jet:Flames;
 		
 		public static var buttons:Array;
@@ -47,10 +47,12 @@ package
 			{
 				jet.addAnimation("on", [3, 4, 5], 1.0 / 0.05, false);
 			}
+			
+			createParticles();
 			 
 		}
 		
-		public static function createParticles() : void
+		public function createParticles() : void
 		{
 			var particles:int = 20;			
 			flameEmitter = new FlxEmitter(0, 0, particles); //x and y of the emitter
@@ -59,24 +61,45 @@ package
 			for(var i:int = 0; i < particles; i++)
 			{
 				var particle:FlxParticle = new FlxParticle();
-				particle.makeGraphic(2, 2, 0xffffffff);
+				particle.loadGraphic(GameAssets.FlameParticles, false, false, 16, 16);
+				
+				if (index == 0)
+				{
+					particle.addAnimation("go", [0, 1, 2, 3], 1.0 / 0.05, true);
+				}
+				else
+				{
+					particle.addAnimation("go", [4, 5, 6, 7], 1.0 / 0.05, true);
+				}
+				particle.play("go");
 				particle.exists = false;
 				particle.friction = 100;
-				particle.lifespan = 0.5;
+				particle.lifespan = 0.15;
+				particle.onEmit.apply(onEmit);
+				
 				flameEmitter.add(particle);
 			}
 			
-			flameEmitter.lifespan = 0.25;
+			flameEmitter.lifespan = 0.15;
+			
 			flameEmitter.particleDrag = new FlxPoint(100, 100);
-			flameEmitter.minParticleSpeed = new FlxPoint( -50, 50);
-			flameEmitter.maxParticleSpeed = new FlxPoint(50, 150);
+			flameEmitter.minParticleSpeed = new FlxPoint( -1, 50);
+			flameEmitter.maxParticleSpeed = new FlxPoint(1, 150);
 			flameEmitter.gravity = 500;
-			flameEmitter.bounce = 1;
+			flameEmitter.maxRotation = 0.0;
+			flameEmitter.minRotation = 0.0;
+			
+			flameEmitter.bounce = 0;
 			
 			
-			flameEmitter.start(false, 0.5, 0.01, 10);
+			flameEmitter.start(false, 0.15, 0.01, 10);
 		}
 		
+		public static function onEmit(particle:FlxParticle) : void
+		{
+			particle.play("go", true);
+			particle.lifespan = 0.15;
+		}
 		
 		
 		public function flameOn(tiles:Map) : void
@@ -125,8 +148,8 @@ package
 		public override function postUpdate() : void
 		{
 			super.postUpdate();
-			flameEmitter.x = x;
-			flameEmitter.y = y;
+			flameEmitter.x = x + 8;
+			flameEmitter.y = y + 30;
 			jet.x = x - 12;
 			jet.y = y + 16;
 			jet.facing = facing;
