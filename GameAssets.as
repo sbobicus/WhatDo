@@ -33,6 +33,9 @@ package
 		[Embed(source="./assets/robo1.png")]
 		public static var Robot1:Class;
 		
+		[Embed(source="./assets/elevator.png")]
+		public static var Elevator:Class;
+		
 		[Embed(source="./maps/testmap.txt", mimeType="application/octet-stream")]
 		public static var TestMap:Class;
 		

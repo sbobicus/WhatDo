@@ -26,10 +26,10 @@ package
 		public var time:Number = 0.0;
 		public var switchTime:Number = 1000.0;
 		
-		public var multiplayer:Boolean = true;
+		public var multiplayer:Boolean = false;
 		
 		public var backgroundSprite:FlxSprite;
-		
+		public var shouldLose:Boolean = false;
 		public function Level()
 		{
 			super();
@@ -42,25 +42,25 @@ package
 			FlxG.bgColor = 0xFF666666;
 			
 			backgroundSprite = new FlxSprite(0, 0);
-
+			shouldLose = false;
 			
 			//Create a new tilemap using our map data
 			map = new Map(new LevelData(GameAssets.Skyscraper1, LevelData.TYPE_BITMAP), new LevelData(GameAssets.EmptyMapItems, LevelData.TYPE_CSV));
 			FlxG.camera.follow(currentPlayer, FlxCamera.STYLE_LOCKON);
 			map.loadLevel();
-			var x:uint = map.getBounds().left;
-			var y:uint = map.getBounds().top;
-			var a:uint = map.getBounds().right;
-			var b:uint = map.getBounds().bottom;
-			FlxG.camera.setBounds(x,y,a,b,true);
-			map.spawn = new FlxObject(map.getBounds().width - 64, map.getBounds().height - 64);
+			//var x:uint = map.getBounds().left;
+			//var y:uint = map.getBounds().top;
+			//var a:uint = map.getBounds().right;
+			//var b:uint = map.getBounds().bottom;
+			//FlxG.camera.setBounds(x,y,a,b,true);
+			map.spawn = new FlxObject(map.getBounds().width - 128, map.getBounds().height - 96);
 			backgroundSprite.makeGraphic(map.getBounds().width, map.getBounds().height, 0xff33CCFF);
 			add(backgroundSprite);
 			add(map);
-			//add(map.exit);
-			//add(map.spawn);
-			//add(map.coins);
-			//add(map.enemies);
+			add(map.exit);
+			add(map.spawn);
+			add(map.coins);
+			add(map.enemies);
 
 			//Create currentPlayer (a red box)
 			Player.initButtons();
@@ -74,6 +74,7 @@ package
 						
 			currentPlayer = player2;
 			switchPlayers();
+			FlxG.camera.follow(currentPlayer, FlxCamera.STYLE_LOCKON);
 			
 			score = new FlxText(2,2,80);
 			score.shadow = 0xff000000;
@@ -88,8 +89,8 @@ package
 				case 0: status.text = "Collect coins."; break;
 				case 1: status.text = "Aww, you died!"; break;
 			}
-			//add(status);
-			//add(map.enemies);
+			add(status);
+			add(map.enemies);
 		}
 		
 		public function createPlayer(index:int, graphic:Class) : Player
@@ -151,8 +152,13 @@ package
 			//FlxG.flash(0x55ffffff, 0.2);
 		}
 		
+		
 		override public function update():void
 		{
+			if (shouldLose)
+			{
+				FlxG.resetState();
+			}
 			time += FlxG.elapsed;
 			score.text = "" + currentPlayer.flames.y;
 			if (time > switchTime)
@@ -216,7 +222,7 @@ package
 			FlxG.overlap(map.coins, currentPlayer, getCoin);
 			
 			//Check to see if the currentPlayer touched the exit door this frame
-			FlxG.overlap(map.exit, currentPlayer, win);
+			//FlxG.overlap(map.exit, currentPlayer, win);
 			
 			//Finally, bump the currentPlayer up against the map
 			FlxG.collide(map, currentPlayer);
@@ -226,8 +232,10 @@ package
 			
 			if (FlxG.overlap(map.enemies, currentPlayer))
 			{
-				FlxG.score = 1; //sets status.text to "Aww, you died!"
-				FlxG.resetState();
+				FlxG.score = 1;
+				FlxG.shake(0.05);
+				FlxG.flash();
+				shouldLose = true;
 			}
 			
 			
@@ -236,12 +244,16 @@ package
 				FlxG.overlap(currentPlayer.flames, map.enemies, FlamesHitEnemy);
 			}
 			
-			//Check for currentPlayer lose conditions
 			if(!FlxG.worldBounds.overlaps(new FlxRect(currentPlayer.x, currentPlayer.y, 1, 1)))
 			{
-				FlxG.score = 1; //sets status.text to "Aww, you died!"
-				FlxG.resetState();
+				FlxG.score = 1; 
+				FlxG.shake(0.05);
+				FlxG.flash();
+				shouldLose = true;
+				
 			}
+			
+
 		}
 		
 		private function FlamesHitEnemy(flames:FlxSprite, enemy:FlxSprite):void
@@ -257,17 +269,20 @@ package
 			if(map.coins.countLiving() == 0)
 			{
 				status.text = "Find the exit.";
-				map.exit.exists = true;
+				map.exit.play("open");
 			}
 		}
 		
 		//Called whenever the currentPlayer touches the exit
 		public function win(Exit:FlxSprite,Player:FlxSprite):void
 		{
-			status.text = "Yay, you won!";
-			score.text = "SCORE: 5000";
-			Player.kill();
-			WhatDo.nextLevel();
+			if(map.coins.countLiving() == 0)
+			{
+				status.text = "Yay, you won!";
+				score.text = "SCORE: 5000";
+				Player.kill();
+				WhatDo.nextLevel();
+			}
 		}
 	}
 
