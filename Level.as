@@ -29,7 +29,7 @@ package
 		public var multiplayer:Boolean = false;
 		
 		public var backgroundSprite:FlxSprite;
-		
+		public var shouldLose:Boolean = false;
 		public function Level()
 		{
 			super();
@@ -42,10 +42,11 @@ package
 			FlxG.bgColor = 0xFF666666;
 			
 			backgroundSprite = new FlxSprite(0, 0);
-
+			shouldLose = false;
 			
 			//Create a new tilemap using our map data
-			map = new Map(new LevelData(GameAssets.Skyscraper1, LevelData.TYPE_BITMAP), new LevelData(GameAssets.TestMapItems, LevelData.TYPE_CSV));
+			//map = new Map(new LevelData(GameAssets.Skyscraper1, LevelData.TYPE_BITMAP), new LevelData(GameAssets.TestMapItems, LevelData.TYPE_CSV));
+			map = new Map(new LevelData(GameAssets.TestMap, LevelData.TYPE_CSV), new LevelData(GameAssets.TestMapItems, LevelData.TYPE_CSV));
 			map.loadLevel();
 			map.spawn = new FlxObject(128, map.getBounds().height / 2);
 			backgroundSprite.makeGraphic(map.getBounds().width, map.getBounds().height, 0xff33CCFF);
@@ -148,6 +149,11 @@ package
 		
 		override public function update():void
 		{
+			if (shouldLose)
+			{
+				FlxG.resetState();
+			}
+			
 			FlxG.camera.follow(currentPlayer, FlxCamera.STYLE_PLATFORMER);
 			//var x:uint = map.getBounds().left;
 			//var y:uint = map.getBounds().top;
@@ -227,8 +233,10 @@ package
 			
 			if (FlxG.overlap(map.enemies, currentPlayer))
 			{
-				FlxG.score = 1; //sets status.text to "Aww, you died!"
-				FlxG.resetState();
+				FlxG.score = 1;
+				FlxG.shake(0.05);
+				FlxG.flash();
+				shouldLose = true;
 			}
 			
 			
@@ -240,9 +248,14 @@ package
 			//Check for currentPlayer lose conditions
 			if(!FlxG.worldBounds.overlaps(new FlxRect(currentPlayer.x, currentPlayer.y, 1, 1)))
 			{
-				FlxG.score = 1; //sets status.text to "Aww, you died!"
-				FlxG.resetState();
+				FlxG.score = 1; 
+				FlxG.shake(0.05);
+				FlxG.flash();
+				shouldLose = true;
+				
 			}
+			
+
 		}
 		
 		private function FlamesHitEnemy(flames:FlxSprite, enemy:FlxSprite):void
