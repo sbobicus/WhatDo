@@ -68,7 +68,8 @@ package
 			backgroundSprite2.loadGraphic(GameAssets.Background2);
 			backgroundSprite2.solid = false;
 			backgroundSprite2.scrollFactor.x = 0.7;
-			backgroundSprite2.y = 128;
+			backgroundSprite2.scrollFactor.y = 0.0;
+			
 			shouldLose = false;
 			
 			//Create a new tilemap using our map data
