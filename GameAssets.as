@@ -64,14 +64,11 @@ package
 		[Embed(source="./maps/emptymap_items.txt", mimeType="application/octet-stream")]
 		public static var EmptyMapItems:Class;
 		
-		[Embed(source="./maps/skyscraper1.png")]
+		[Embed(source="./maps/skyscraper1.txt", mimeType="application/octet-stream")]
 		public static var Skyscraper1:Class;
 		
-		[Embed(source="./maps/skyscraper2.png")]
-		public static var Skyscraper2:Class;
-		
-		[Embed(source="./maps/skyscraper3.png")]
-		public static var Skyscraper3:Class;
+		[Embed(source="./maps/skyscraper1items.txt", mimeType="application/octet-stream")]
+		public static var Skyscraper1Items:Class;
 		
 		[Embed(source = "assets/coin.mp3")]
 		public static var CoinNoise:Class;
