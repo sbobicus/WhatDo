@@ -41,6 +41,12 @@ package
 		
 		[Embed(source="./maps/level5_objects.txt", mimeType="application/octet-stream")]
 		public static var Level5Objects:Class;
+		
+		[Embed(source="./maps/wilso_tiles.txt", mimeType="application/octet-stream")]
+		public static var WilsoTiles:Class;
+		
+		[Embed(source="./maps/wilso_objects.txt", mimeType="application/octet-stream")]
+		public static var WilsoObjects:Class;
 							
 		[Embed(source="./assets/punk.png")]
 		public static var Player2Image:Class;
