@@ -45,7 +45,7 @@ package
 			shouldLose = false;
 			
 			//Create a new tilemap using our map data
-			map = new Map(new LevelData(GameAssets.Skyscraper2, LevelData.TYPE_BITMAP), new LevelData(GameAssets.EmptyMapItems, LevelData.TYPE_CSV));
+			map = new Map(new LevelData(GameAssets.TestMap, LevelData.TYPE_CSV), new LevelData(GameAssets.EmptyMapItems, LevelData.TYPE_CSV));
 			map.loadLevel();
 			var x:uint = map.getBounds().left;
 			var y:uint = map.getBounds().top;
