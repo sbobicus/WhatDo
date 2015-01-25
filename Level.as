@@ -45,9 +45,15 @@ package
 
 			
 			//Create a new tilemap using our map data
-			map = new Map(new LevelData(GameAssets.Skyscraper1, LevelData.TYPE_BITMAP), new LevelData(GameAssets.TestMapItems, LevelData.TYPE_CSV));
+			map = new Map(new LevelData(GameAssets.Skyscraper1, LevelData.TYPE_BITMAP), new LevelData(GameAssets.EmptyMapItems, LevelData.TYPE_CSV));
+			FlxG.camera.follow(currentPlayer, FlxCamera.STYLE_PLATFORMER);
 			map.loadLevel();
-			map.spawn = new FlxObject(128, map.getBounds().height / 2);
+			var x:uint = map.getBounds().left;
+			var y:uint = map.getBounds().top;
+			var a:uint = map.getBounds().right;
+			var b:uint = map.getBounds().bottom;
+			FlxG.camera.setBounds(x,y,a,b,true);
+			map.spawn = new FlxObject(128, map.getBounds().height);
 			backgroundSprite.makeGraphic(map.getBounds().width, map.getBounds().height, 0xff33CCFF);
 			add(backgroundSprite);
 			add(map);
@@ -141,18 +147,12 @@ package
 				add(currentPlayer.flames);
 			}
 			
-			//FlxG.shake(0.001, 0.25);
-			//FlxG.flash(0x55ffffff, 0.2);
+			FlxG.shake(0.001, 0.25);
+			FlxG.flash(0x55ffffff, 0.2);
 		}
 		
 		override public function update():void
 		{
-			FlxG.camera.follow(currentPlayer, FlxCamera.STYLE_PLATFORMER);
-			//var x:uint = map.getBounds().left;
-			//var y:uint = map.getBounds().top;
-			//var a:uint = map.getBounds().right;
-			//var b:uint = map.getBounds().bottom;
-			//FlxG.camera.setBounds(x,y,a,b,true);
 			time += FlxG.elapsed;
 			score.text = "" + currentPlayer.flames.y;
 			if (time > switchTime)
