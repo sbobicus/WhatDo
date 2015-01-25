@@ -45,17 +45,19 @@ package
 			shouldLose = false;
 			
 			//Create a new tilemap using our map data
+			//map = new Map(new LevelData(GameAssets.Skyscraper2, LevelData.TYPE_BITMAP), new LevelData(GameAssets.EmptyMapItems, LevelData.TYPE_CSV));
 			//map = new Map(new LevelData(GameAssets.Skyscraper1, LevelData.TYPE_BITMAP), new LevelData(GameAssets.EmptyMapItems, LevelData.TYPE_CSV));
 			map = new Map(new LevelData(GameAssets.TestMap, LevelData.TYPE_CSV), new LevelData(GameAssets.TestMapItems, LevelData.TYPE_CSV));
 			FlxG.camera.follow(currentPlayer, FlxCamera.STYLE_LOCKON);
 			map.loadLevel();
-			//var x:uint = map.getBounds().left;
-			//var y:uint = map.getBounds().top;
-			//var a:uint = map.getBounds().right;
-			//var b:uint = map.getBounds().bottom;
-			//FlxG.camera.setBounds(x,y,a,b,true);
+			var x:uint = map.getBounds().left;
+			var y:uint = map.getBounds().top;
+			var a:uint = map.getBounds().right;
+			var b:uint = map.getBounds().bottom;
+			FlxG.camera.setBounds(x,y,a,b,true);
+		
 			if (map.spawn == null)
-				map.spawn = new FlxObject(map.getBounds().width - 128, map.getBounds().height - 96);
+				map.spawn = new FlxObject(map.getBounds().width - 192, map.getBounds().height - 96);
 			backgroundSprite.makeGraphic(map.getBounds().width, map.getBounds().height, 0xff33CCFF);
 			add(backgroundSprite);
 			add(map);
@@ -99,8 +101,8 @@ package
 		{
 			var player:Player = new Player(index, map.spawn.x, map.spawn.y, graphic);
 			player.maxVelocity.x = 150;
-			player.maxVelocity.y = 250;
-			player.acceleration.y = 300;
+			player.maxVelocity.y = 400;
+			player.acceleration.y = 550;
 			player.drag.x = player.maxVelocity.x * 4;
 			return player;
 		}
@@ -163,11 +165,6 @@ package
 			}
 			FlxG.worldBounds = map.getBounds();
 			FlxG.camera.follow(currentPlayer, FlxCamera.STYLE_PLATFORMER);
-			var x:uint = map.getBounds().left;
-			var y:uint = map.getBounds().top;
-			var a:uint = map.getBounds().width;
-			var b:uint = map.getBounds().height;
-			FlxG.camera.setBounds(x,y,a,b,true);
 			time += FlxG.elapsed;
 			score.text = "" + currentPlayer.flames.y;
 			if (time > switchTime)
@@ -191,7 +188,7 @@ package
 			}
 			if (currentPlayer.keyJustPressed(Player.KEY_JUMP))
 			{
-				currentPlayer.velocity.y = -currentPlayer.maxVelocity.y / 2;
+				currentPlayer.velocity.y = -currentPlayer.maxVelocity.y * 0.7;
 				currentPlayer.flameOn(map);
 			}
 			else 
