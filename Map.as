@@ -37,7 +37,7 @@ package
 		//creates a new coin located on the specified tile
 		public function createCoin(X:uint,Y:uint):void
 		{
-			var coin:FlxSprite = new FlxSprite(X * _tileWidth + 3, Y * _tileHeight + 2);
+			var coin:Coin = new Coin(X * _tileWidth + 3, Y * _tileHeight + 2, null);
 			coin.loadGraphic(GameAssets.Coins, true);
 			coin.addAnimation("red", [0, 1], 1);
 			coin.addAnimation("blue", [1]);
@@ -58,9 +58,12 @@ package
 		
 		public function createExit(X:uint, Y:uint):void
 		{
-			exit = new FlxSprite(X* _tileWidth + 1,Y * _tileHeight);
-			exit.makeGraphic(14,16,0xff3f3f3f);
-			exit.exists = false;
+			exit = new FlxSprite(X* _tileWidth - 16,Y * _tileHeight - 16);
+			exit.loadGraphic(GameAssets.Elevator, true, false, 32, 32, false);
+			exit.addAnimation("open", [0, 1, 2], 3, false);
+			exit.addAnimation("closed", [0], 3, true);
+			exit.play("closed");
+			exit.exists = true;
 		}
 		
 		public function loadLevel():void

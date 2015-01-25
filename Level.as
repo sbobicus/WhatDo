@@ -26,7 +26,7 @@ package
 		public var time:Number = 0.0;
 		public var switchTime:Number = 1.0;
 		
-		public var multiplayer:Boolean = true;
+		public var multiplayer:Boolean = false;
 		
 		public var backgroundSprite:FlxSprite;
 		
@@ -145,6 +145,7 @@ package
 			//FlxG.flash(0x55ffffff, 0.2);
 		}
 		
+		
 		override public function update():void
 		{
 			FlxG.camera.follow(currentPlayer, FlxCamera.STYLE_PLATFORMER);
@@ -257,17 +258,20 @@ package
 			if(map.coins.countLiving() == 0)
 			{
 				status.text = "Find the exit.";
-				map.exit.exists = true;
+				map.exit.play("open");
 			}
 		}
 		
 		//Called whenever the currentPlayer touches the exit
 		public function win(Exit:FlxSprite,Player:FlxSprite):void
 		{
-			status.text = "Yay, you won!";
-			score.text = "SCORE: 5000";
-			Player.kill();
-			WhatDo.nextLevel();
+			if(map.coins.countLiving() == 0)
+			{
+				status.text = "Yay, you won!";
+				score.text = "SCORE: 5000";
+				Player.kill();
+				WhatDo.nextLevel();
+			}
 		}
 	}
 
