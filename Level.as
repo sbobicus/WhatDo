@@ -63,6 +63,7 @@ package
 			backgroundSprite.loadGraphic(GameAssets.Background);
 			backgroundSprite.solid = false;
 			backgroundSprite.scrollFactor.x = 0.5;
+			backgroundSprite.scrollFactor.y = 0.0;
 			
 			backgroundSprite2.loadGraphic(GameAssets.Background2);
 			backgroundSprite2.solid = false;

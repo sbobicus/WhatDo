@@ -57,7 +57,7 @@ package
 		[Embed(source="./assets/elevator.png")]
 		public static var Elevator:Class;
 		
-		[Embed(source="./assets/bg2.png")]
+		[Embed(source="./assets/bg.png")]
 		public static var Background:Class;
 		
 		[Embed(source="./assets/bg3.png")]
